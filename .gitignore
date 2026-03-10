@@ -1,0 +1,4 @@
+# Byte-compiled / optimized / DLL files
+*.epub
+__pycache__/
+*.py[cod]
