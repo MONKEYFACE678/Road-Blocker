@@ -9,7 +9,7 @@ import PIL.ImageTk as imtk
 
 
 
-class Start_Menu(Tk):
+class Windows_Frames(Tk):
     def __init__(self):
         super().__init__()
 
@@ -20,17 +20,21 @@ class Start_Menu(Tk):
         self.geometry('800x650')
         
         
-        
+    def start_frame(self):
+        #start button, image background and text
         self.img = PhotoImage(file="Road Blocker\start_window.png").subsample(3)
         
         self.bg_img = Label(self, image = self.img)
-       
+        
         self.bg_img.pack(fill="both", expand=True)
         
-     
+        
         self.start_button = Button(self, text="Start", width=10,height=2,font="helvetica", background="Orange")
         
         self.start_button.place(x=360, y=541)
+
+    def main_menu_frame(self):
+        pass
 
 
       
@@ -73,8 +77,9 @@ class Start_Menu(Tk):
     Quit_button.pack(pady=10)
     '''
 
-mainmenu = Start_Menu()
-mainmenu.mainloop()
+start = Windows_Frames()
+start.first_frame()
+start.mainloop()
  
 
 
