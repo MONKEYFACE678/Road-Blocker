@@ -4,6 +4,7 @@
 
 from tkinter import *
 import PIL.Image as im
+import PIL.ImageTk as imtk
 
 
 
@@ -17,12 +18,14 @@ class Main_Menu(Tk):
         self.iconbitmap("")
         self.geometry('800x650')
         
-       
-        self.background_frame = Frame(self, bg="lightblue", height = 40)
-        self.background_frame.pack(fill=X)
+        self.back_image = imtk.PhotoImage(file="Road Blocker\MainMenu_Background.png")
         
-        self.image_bkgd = im.ImageFile("C:\Users\angel\Downloads\roadblockr files\MainMenu_Background.png")
+        self.background_frame = Label(self,image=self.back_image)
+        self.background_frame.pack(fill="both")
         
+        
+      
+
 
     
  
