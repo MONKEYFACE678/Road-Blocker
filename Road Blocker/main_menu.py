@@ -16,7 +16,9 @@ class Main_Menu(Tk):
         self.iconbitmap("")
         self.geometry('400x300')
         
-
+        self.header_frame = Frame(self, bg="lightblue", width=100, height = 50)
+        self.header_frame.pack(fill=X)
+        
 
     
  
