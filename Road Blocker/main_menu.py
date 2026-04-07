@@ -3,6 +3,7 @@
 # I will be using tkinter to create the main menu screen and import the buttons that will hav mouse interaction and will be able to click on the buttons to navigate to different screens such as the settings screen and the about us screen
 
 from tkinter import *
+import PIL.Image as im
 
 
 
@@ -14,10 +15,13 @@ class Main_Menu(Tk):
         self.title("ROADBLOCKR MAIN MENU")
         #ask caden to design icon for roadblockr
         self.iconbitmap("")
-        self.geometry('400x300')
+        self.geometry('800x650')
         
-        self.header_frame = Frame(self, bg="lightblue", width=100, height = 50)
-        self.header_frame.pack(fill=X)
+       
+        self.background_frame = Frame(self, bg="lightblue", height = 40)
+        self.background_frame.pack(fill=X)
+        
+        self.image_bkgd = im.ImageFile("C:\Users\angel\Downloads\roadblockr files\MainMenu_Background.png")
         
 
     
