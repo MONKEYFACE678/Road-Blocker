@@ -21,7 +21,7 @@ class Main_Menu(Tk):
         self.back_image = imtk.PhotoImage(file="Road Blocker\MainMenu_Background.png")
         
         self.background_frame = Label(self,image=self.back_image)
-        self.background_frame.pack(fill="both")
+        self.background_frame.pack()
         
         
       
