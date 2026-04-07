@@ -135,6 +135,24 @@ class TrafficGetter:
         with open("data/weighted_graph.json", "w",encoding = "utf-8") as out_file:
             json.dump(graph, out_file, indent=2)
         
+        
+    def load_weighted_graph_from_file(self):
+        with open("data/weighted_graph.json", "r",encoding = "utf-8") as in_file:
+            data = json.load(in_file)
+            
+        edges = data["edges"]
+        nodes = data["nodes"]
+        
+        graph = {}
+
+        for edge in edges:
+            src = edge["from"]
+            dst = edge["to"]
+            w = edge["weight"]
+
+            graph.setdefault(src, []).append((dst, w))
+            
+        return graph
                 
 if __name__ == "__main__":
     lg = LocationGetter()
@@ -163,3 +181,4 @@ if __name__ == "__main__":
     tg.save_traffic_tile_to_file(api_key, x, y, zoom)
     tg.save_pbf_as_json()
     tg.save_weighted_graph_from_file_to_file()
+    print(tg.load_weighted_graph_from_file())
