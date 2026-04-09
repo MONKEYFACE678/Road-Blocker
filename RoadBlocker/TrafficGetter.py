@@ -2,7 +2,7 @@ import requests
 import shutil
 import json
 from PIL import Image
-from LocationGetter import LocationGetter
+from RoadBlocker import LocationGetter
 import shutil
 import gzip
 import mapbox_vector_tile
@@ -161,7 +161,7 @@ class TrafficGetter:
         return graph
                 
 if __name__ == "__main__":
-    lg = LocationGetter()
+    lg = LocationGetter.LocationGetter()
     
     address = input("Enter your search location: ")
     location = lg.get_location_coordinates_from_address(address)
