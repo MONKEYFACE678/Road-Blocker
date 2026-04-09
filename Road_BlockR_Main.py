@@ -7,7 +7,7 @@ win.geometry("400x300")
 def about_us():
     about = tk.Toplevel(win)
     about.title("About Us")
-    about.geometry("500x350")
+    about.geometry("1500x500")
     
     info = (
         "Road BlockR:\n"
@@ -16,7 +16,7 @@ def about_us():
         "Jayson Coleman\n" 
         "Angel Carrillo\n"
         "Caden Saiza\n\n"
-        "We are all students at the Univeristy of New Mexico State Alamorgordo and we created this project as part of our computer science class\n"
+        "We are all students at the University of New Mexico State Alamorgordo and we created this project as part of our data structures and algorithms class\n"
         "to learn how to design and implement simulations that can be helpful for students even when they learning how to drive and to test different\n" 
         "traffic management strategies that can be implemented in real life to improve traffic flow and reduce congestion."
     )
