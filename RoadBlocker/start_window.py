@@ -7,6 +7,9 @@ import PIL.Image as im
 import PIL.ImageTk as imtk
 
 
+import tkinter.font as tkFont
+
+
 
 
 class Windows_Frames(Tk):
@@ -21,15 +24,19 @@ class Windows_Frames(Tk):
         
         
     def start_frame(self):
-        #setup for start button, image background...
+        self.start_frame = Frame(self, width=800,height=650)
+        #setup for start button, image background, and fonts...
         self.img = PhotoImage(file="RoadBlocker\start_window.png").subsample(3)
         self.bg_img = Label(self, image = self.img)
         self.bg_img.pack(fill="both", expand=True)
 
-        
-        
-        self.start_button = Button(self, text="Start", width=10,height=2,font="helvetica", background="Orange")
-        self.start_button.place(x=360, y=541)
+       
+
+    
+
+        self.start_button = Button(self, text="Start", width=15,height=2,font='helvetica', 
+        background="#F9881F",relief="flat")
+        self.start_button.place(x=330, y=539)
 
     def display_fonts(self):
         self.letter_r = PhotoImage(file="RoadBlocker/tire_r.png").subsample(18)
