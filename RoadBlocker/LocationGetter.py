@@ -3,6 +3,8 @@ import re
 import math
 
 class LocationGetter:
+    def __init__(self):
+        self.current_location = 0,0
 
     def get_public_ip(self):
         #Gets IP
@@ -27,6 +29,7 @@ class LocationGetter:
         ip_address = self.get_public_ip()
         #Then gets coordinates from ip
         location_data = self.get_location_from_ip(api_key, ip_address)
+        self.current_location = location_data["loc"].split(",")
         return location_data["loc"].split(",")
     
     def get_location_coordinates_from_address(self, address):
@@ -39,6 +42,7 @@ class LocationGetter:
         if data["results"] is None:
             raise RuntimeError("No results found")
         location = data["results"][0]["position"]
+        self.current_location = [location["lat"], location["lon"]]
         return [location["lat"], location["lon"]]
     
     def convert_location_to_tile_data(self, lat, lon, zoom):

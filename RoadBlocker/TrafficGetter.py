@@ -2,25 +2,31 @@ import requests
 import shutil
 import json
 from PIL import Image
-from LocationGetter import LocationGetter
+from RoadBlocker import LocationGetter
 import shutil
 import gzip
 import mapbox_vector_tile
 import math
+import os
+
 
 
 class TrafficGetter:
+    def __init__(self):
+        dirname = os.path.dirname(__file__)
+        self.data_folder = os.path.join(dirname,"data")
+        os.makedirs(self.data_folder, exist_ok=True)
     
     def save_traffic_image_from_x_y_to_file(self, api_key, x, y, zoom):
         #Requests TomTom api for image
         response = requests.get(f"https://api.tomtom.com/traffic/map/4/tile/flow/absolute/{zoom}/{x}/{y}.png?key={api_key}", stream=True)
-        with open("data/traffic_img.png", "wb") as out_file:
+        with open(os.path.join(self.data_folder, "traffic_img.png"), "wb") as out_file:
             shutil.copyfileobj(response.raw, out_file)
         del response
     
     def show_traffic_image(self):
         #Shows saved image from save_traffic_image_from_x_y_to_file
-        image = Image.open("data/traffic_img.png")
+        image = Image.open(os.path.join(self.data_folder, "traffic_img.png"))
         image.show()
         
     def save_traffic_data_from_coords_to_file(self, api_key, lat, lon, zoom):
@@ -29,13 +35,13 @@ class TrafficGetter:
         response.raise_for_status()
         data = response.json()
         
-        with open("data/traffic_data.json", "w",encoding = "utf-8") as out_file:
+        with open(os.path.join(self.data_folder, "traffic_data.json"), "w",encoding = "utf-8") as out_file:
             json.dump(data, out_file, indent = 2)
         del response
         
     def get_simple_traffic_data_from_file(self):
         #Reads traffic data file, then returns the data simplified
-        with open("data/traffic_data.json", "r") as in_file:
+        with open(os.path.join(self.data_folder, "traffic_data.json"), "r") as in_file:
             data = json.load(in_file)["flowSegmentData"]
             current_speed = data["currentSpeed"]
             free_flow_speed = data["freeFlowSpeed"]
@@ -48,26 +54,26 @@ class TrafficGetter:
         response.raise_for_status()
         data = response.raw
         
-        with open("data/traffic_tile.pbf", "wb") as out_file:
+        with open(os.path.join(self.data_folder, "traffic_tile.pbf"), "wb") as out_file:
             shutil.copyfileobj(data, out_file)
         del response
         
     def save_pbf_as_json(self):
-        with open("data/traffic_tile.pbf", "rb") as in_file:
+        with open(os.path.join(self.data_folder, "traffic_tile.pbf"), "rb") as in_file:
             compressed = in_file.read()
 
         decompressed = gzip.decompress(compressed)
         tile_bytes = mapbox_vector_tile.decode(decompressed)
         
-        with open("data/traffic_tile.json", "w",encoding = "utf-8") as out_file:
+        with open(os.path.join(self.data_folder, "traffic_tile.json"), "w",encoding = "utf-8") as out_file:
             json.dump(tile_bytes, out_file, indent=2)
             
     def load_tile_data_from_json(self):
-        with open("data/tile_data.json", "r") as in_file:
+        with open(os.path.join(self.data_folder, "tile_data.json"), "r") as in_file:
             data = json.load(in_file)
             
     def save_weighted_graph_from_file_to_file(self):
-        with open("data/traffic_tile.json", "r", encoding="utf-8") as in_file:
+        with open(os.path.join(self.data_folder, "traffic_tile.json"), "r", encoding="utf-8") as in_file:
             data = json.load(in_file)
 
         node_map = {} 
@@ -132,12 +138,12 @@ class TrafficGetter:
             "nodes": nodes,
             "edges": edges
         }
-        with open("data/weighted_graph.json", "w",encoding = "utf-8") as out_file:
+        with open(os.path.join(self.data_folder, "weighted_graph.json"), "w",encoding = "utf-8") as out_file:
             json.dump(graph, out_file, indent=2)
         
         
     def load_weighted_graph_from_file(self):
-        with open("data/weighted_graph.json", "r",encoding = "utf-8") as in_file:
+        with open(os.path.join(self.data_folder, "weighted_graph.json"), "r",encoding = "utf-8") as in_file:
             data = json.load(in_file)
             
         edges = data["edges"]
@@ -155,7 +161,7 @@ class TrafficGetter:
         return graph
                 
 if __name__ == "__main__":
-    lg = LocationGetter()
+    lg = LocationGetter.LocationGetter()
     
     address = input("Enter your search location: ")
     location = lg.get_location_coordinates_from_address(address)
@@ -181,4 +187,3 @@ if __name__ == "__main__":
     tg.save_traffic_tile_to_file(api_key, x, y, zoom)
     tg.save_pbf_as_json()
     tg.save_weighted_graph_from_file_to_file()
-    print(tg.load_weighted_graph_from_file())
