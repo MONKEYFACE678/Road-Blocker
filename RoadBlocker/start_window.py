@@ -9,6 +9,7 @@ import PIL.Image as im
 import PIL.ImageTk as imtk
 
 
+
 from tkinter import filedialog, messagebox
 
 import rembg
@@ -31,11 +32,12 @@ class Windows_Frames(Tk):
         
 
     #remove background image from png text, starting frame, and start button 
-    # and displayfonts. . .
+    # and displays start title. . .
      
    
 
     def start_frame(self):
+
         self.start_frame = Frame(self, width=800,height=650)
         #setup for start button, image background, and fonts...
         self.img = PhotoImage(file="RoadBlocker\start_window.png").subsample(3)
@@ -48,9 +50,10 @@ class Windows_Frames(Tk):
         
 
     def display_title(self):
+        
         pass
-       
-       
+
+        
 
 
 
