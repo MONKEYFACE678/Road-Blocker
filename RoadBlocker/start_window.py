@@ -14,7 +14,7 @@ from tkinter import filedialog, messagebox
 
 import rembg
 import io
-import os
+import os as os
 import tempfile
 import shutil
 from tkinterdnd2 import TkinterDnD, DND_FILES
@@ -30,7 +30,7 @@ class Windows_Frames(Tk):
         self.iconbitmap("")
         self.geometry('800x650')
         
-
+      
     #remove background image from png text, starting frame, and start button 
     # and displays start title. . .
      
@@ -42,6 +42,7 @@ class Windows_Frames(Tk):
         #setup for start button, image background, and fonts...
         self.img = PhotoImage(file="RoadBlocker\start_window.png").subsample(3)
         self.bg_img = Label(self, image = self.img)
+        
         self.bg_img.pack(fill="both", expand=True)
 
         self.start_button = Button(self, text="Start", width=15,height=2,font='helvetica', 
@@ -51,7 +52,13 @@ class Windows_Frames(Tk):
 
     def display_title(self):
         
-        pass
+  
+        
+        self.title_img = PhotoImage(file = "RoadBlocker\\title\\title_rb.png").subsample(2)
+        self.title = Label(self, image = self.title_img, bg ="#000000")
+   
+       
+        self.title.place(x=80, y=15)
 
         
 
