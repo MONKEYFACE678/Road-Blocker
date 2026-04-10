@@ -2,6 +2,7 @@ import requests
 import re
 import math
 
+
 class LocationGetter:
     def __init__(self):
         self.current_location = 0,0
