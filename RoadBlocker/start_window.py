@@ -54,23 +54,78 @@ class Menu_window(Tk):
         #send super() to Tk 
         super().__init__()
         #title,icon,size 
-        self.geometry("800x650")
-
-        About_Us_button = Button(self, text="About Us", command=self.show_about)
-        About_Us_button.pack(pady=20)
-
-        Quit_button = Button(self, text="Quit", command=self.destroy)
-        Quit_button.pack(pady=50)
-
-        #add the get_traffic_window which will contain the update data function
-        #and the widgets associated w that . . .
-
+        self.geometry("300x500")
         
+        self.head_frame = Frame(self, bg="#ffb515",
+                    highlightbackground='white', highlightthickness=1)
+
+        self.toggle_button = Button(self.head_frame, text='≡', bg="#ca8d09", fg='white', 
+                    font=('Bold', 20), bd=0,
+                    activebackground="#ca8d09", activeforeground='white', 
+                    command=self.toggle_menu_open)
+
+        self.toggle_button.pack(side=LEFT)
+
+        self.title_lb = Label(self.head_frame, text='Road BlockR Hub', bg="#ffb515", fg='white',
+                font=('Bold', 20))
+
+        self.title_lb.pack(side=LEFT)
+
+        self.head_frame.pack(side=TOP, fill=X)
+        self.head_frame.pack_propagate(False)
+        self.head_frame.configure(height=50)
+        
+    def toggle_menu_open(self):
+        
+        def collapse_toggle_menu(self):
+            self.toggle_menu.destroy()
+            self.toggle_button.config(text='≡')
+            self.toggle_button.config(command=self.toggle_menu_open)
+
+        self.toggle_menu = Frame(self, bg='#ffb515')
+        
+        home_btn = Button(self.toggle_menu, text='Home',
+                            font=('Bold', 20), bg='#ffb515', fg='white',
+                            activebackground='#ffb515', activeforeground='white',)
+        home_btn.place(x=20, y=20)
+        
+        setttings_btn = Button(self.toggle_menu, text='Settings',
+                                font=('Bold', 20), bg='#ffb515', fg='white',
+                                activebackground='#ffb515', activeforeground='white',)
+        setttings_btn.place(x=20, y=80)
+        
+        cities_btn = Button(self.toggle_menu, text='Cities',
+                            font=('Bold', 20), bg='#ffb515', fg='white',
+                            activebackground='#ffb515', activeforeground='white',)
+        cities_btn.place(x=20, y=140)
+        
+        aboutus_btn = Button(self.toggle_menu, text='About Us',
+                                font=('Bold', 20), bg='#ffb515', fg='white',
+                                activebackground='#ffb515', activeforeground='white',command=self.show_about)
+        aboutus_btn.place(x=20, y=200)
+        
+        help_btn = Button(self.toggle_menu, text='Help',
+                            font=('Bold', 20), bg='#ffb515', fg='white',
+                            activebackground='#ffb515', activeforeground='white',)
+        help_btn.place(x=20, y=260)
+
+
+        window_height = self.winfo_height()
+
+        self.toggle_menu.place(x=0, y=50, height=window_height, width=200)
+        
+        self.toggle_button.config(text='⨉')
+        self.toggle_button.config(command=collapse_toggle_menu)
+
+    #add the get_traffic_window which will contain the update data function
+    #and the widgets associated w that . . .
+
+            
     def show_about(self):
-        about_us_window()
+            about_us_window()
 
     def update_data(self):
-        data_window()
+            traffic_data_window()
 
 
 
@@ -94,7 +149,7 @@ class about_us_window(Tk):
                 "traffic management strategies that can be implemented in real life to improve traffic flow and reduce congestion."
             )
             
-        self.about_label = Label(self, text=self.info, font=("Montserrat", 14),bg ="#F7FF81", justify="left")
+        self.about_label = Label(self, text=self.info, font=("Montserrat", 14),bg ="#EBF0A4", justify="left")
         self.about_label.pack(padx=20, pady=20)
         
 
@@ -102,7 +157,7 @@ class about_us_window(Tk):
 
 
 
-class data_window(Tk):
+class traffic_data_window(Tk):
     def __init__(self):
         super().__init__()
 
@@ -132,8 +187,10 @@ class data_window(Tk):
         tg.save_pbf_as_json()
         data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
                 
-        data_string = StringVar(data_window, "No Data Currently")
-        data_lbl = Label(data_window, textvariable=data_string, font=("Arial", 12), justify="center")
+        data_string = StringVar(traffic_data_window
+    , "No Data Currently")
+        data_lbl = Label(traffic_data_window
+    , textvariable=data_string, font=("Arial", 12), justify="center")
         data_lbl.grid(column=1, row=1)
                     
       
