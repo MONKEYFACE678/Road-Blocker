@@ -1,13 +1,21 @@
-from tkinter import *
+'''
+-----want to eventually add a sound of a car revving up when app begins
 
+'''
+
+
+
+from tkinter import *
 from tkinter import ttk
 import PIL.Image as im
 import PIL.ImageTk as imtk
 from tkinter import filedialog, messagebox
 import os as os
+import LocationGetter 
+import TrafficGetter 
 
 
-class Master_Frame(Tk):
+class Master_window(Tk):
     
     def __init__(self):
         super().__init__()
@@ -43,19 +51,30 @@ class Master_Frame(Tk):
 
 class Menu_window(Tk):
     def __init__(self):
-        #send master to toplevel from super() class 
+        #send super() to Tk 
         super().__init__()
         #title,icon,size 
         self.geometry("800x650")
 
         About_Us_button = Button(self, text="About Us", command=self.show_about)
-        About_Us_button.pack(pady=10)
+        About_Us_button.pack(pady=20)
 
         Quit_button = Button(self, text="Quit", command=self.destroy)
-        Quit_button.pack(pady=10)
+        Quit_button.pack(pady=50)
+
+        #add the get_traffic_window which will contain the update data function
+        #and the widgets associated w that . . .
+
         
     def show_about(self):
         about_us_window()
+
+    def update_data(self):
+        data_window()
+
+
+
+
 
 class about_us_window(Tk):
     def __init__(self):
@@ -75,25 +94,60 @@ class about_us_window(Tk):
                 "traffic management strategies that can be implemented in real life to improve traffic flow and reduce congestion."
             )
             
-        self.about_label = Label(self, text=self.info, font=("Arial", 12), justify="left").pack(padx=20, pady=20)
+        self.about_label = Label(self, text=self.info, font=("Montserrat", 14),bg ="#F7FF81", justify="left")
+        self.about_label.pack(padx=20, pady=20)
         
 
-    
-
-   
 
 
+
+
+class data_window(Tk):
+    def __init__(self):
+        super().__init__()
+
+        self.geometry("900x500")
+
+    def update_data(self):
+        
+        lg = LocationGetter.LocationGetter()
+        tg = TrafficGetter.TrafficGetter()
+            
+        api_key = "zTfX7b0hg5V9N5Jzi0bngmq1lFL7vmms"
+        lat, lon = lg.current_location
+        lat = float(lat)
+        lon = float(lon)
+        zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
+                
+        tg.save_traffic_image_from_x_y_to_file(api_key, x, y, zoom)
+        tg.show_traffic_image()
+                    
+        tg.save_traffic_data_from_coords_to_file(api_key, lat, lon, zoom)
+                    
+        current_speed, free_flow_speed, is_road_closed = tg.get_simple_traffic_data_from_file()
+                    
+        tg.save_traffic_tile_to_file(api_key, x, y, zoom)
+        tg.save_pbf_as_json()
+        tg.save_weighted_graph_from_file_to_file()
+        tg.save_pbf_as_json()
+        data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
+                
+        data_string = StringVar(data_window, "No Data Currently")
+        data_lbl = Label(data_window, textvariable=data_string, font=("Arial", 12), justify="center")
+        data_lbl.grid(column=1, row=1)
+                    
       
+        
+   
+      
+
 
 
     
  
 if __name__ == "__main__":
 
-    start = Master_Frame()
-   
-   
-    
+    start = Master_window()
     start.mainloop()
 
 

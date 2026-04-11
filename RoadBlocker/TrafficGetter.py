@@ -2,12 +2,13 @@ import requests
 import shutil
 import json
 from PIL import Image
-from RoadBlocker import LocationGetter
+import LocationGetter
 import shutil
 import gzip
 import mapbox_vector_tile
 import math
 import os
+
 
 
 
@@ -180,6 +181,7 @@ if __name__ == "__main__":
     
     current_speed, free_flow_speed, is_road_closed = tg.get_simple_traffic_data_from_file()
     
+    #want to add a way to display text here
     print(f"Current speed in your area is {current_speed}mph, which is {free_flow_speed- current_speed} mph less than the free flow speed of {free_flow_speed}mph")
     if is_road_closed:
         print("However, the road is closed")

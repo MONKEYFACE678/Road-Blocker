@@ -1,7 +1,10 @@
 
+''' so far commented out, but able to get the main screen, mainmenu window, and the 
+rough draft start of the data and settings menus 
+
 from tkinter import *
 
-import LocationGetter, TrafficGetter
+
 
 
 
@@ -90,13 +93,6 @@ class Main_Frame(Tk):
             Settings_button = Button(self, text="Settings", command=lambda: print("Settings"))
             Settings_button.pack(pady=10)
 
-            #For the the about us screen takes you to a new screen that has information about the project and the team members
-            About_Us_button = Button(self, text="About Us", command=self.about_us)
-            About_Us_button.pack(pady=10)
-
-            Quit_button = Button(self, text="Quit", command=self.destroy)
-            Quit_button.pack(pady=10)
-
 
 
 main = Main_Frame()
@@ -106,3 +102,4 @@ main.data_window()
 
 
 main.mainloop()
+'''

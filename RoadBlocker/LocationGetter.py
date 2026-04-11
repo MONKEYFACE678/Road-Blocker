@@ -2,7 +2,6 @@ import requests
 import re
 import math
 
-
 class LocationGetter:
     def __init__(self):
         self.current_location = 0,0
@@ -18,7 +17,7 @@ class LocationGetter:
             raise ValueError("Could not parse public IP from response")
         return ip_address.group(1)
 
-    def get_location_from_ip(self,api_key, ip_address):
+    def get_location_from_ip(self, api_key, ip_address):
         #Uses ip address to get location
         url = f"https://ipinfo.io/{ip_address}/json?token={api_key}"
         response = requests.get(url)
