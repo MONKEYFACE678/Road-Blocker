@@ -21,9 +21,9 @@ class Main_Frame(Tk):
 
 
     def about_us(self):
-        self.about = Toplevel(self)
-        self.about.title("About Us")
-        self.about.geometry("1500x500")
+        about = Toplevel(self)
+        about.title("About Us")
+        about.geometry("1500x500")
         
         self.info = (
             "Road BlockR:\n"
