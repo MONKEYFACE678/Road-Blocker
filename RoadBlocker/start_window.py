@@ -1,6 +1,10 @@
 '''
------want to eventually add a sound of a car revving up when app begins
-
+-----want to ...
+1. eventually add a sound of a car revving up when app begins
+-----
+2. Move each class to its own file
+-----
+3. Finish the traffic_window and implement from Trafficgetter, and Location getter files
 '''
 
 
@@ -208,6 +212,7 @@ class traffic_data_window(Tk):
             except:
                 print("!!Error!!--Failed to load traffic from api---!!")
 
+#commented out currently becuase I want to put the design separate form data
     '''     
     def update_data(self):
         
