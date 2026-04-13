@@ -157,7 +157,8 @@ class TrafficGetter:
             dst = edge["to"]
             w = edge["weight"]
 
-            graph.setdefault(src, []).append((dst, w))
+            graph.setdefault(src, {})[dst] = w
+            graph.setdefault(dst, {})[src] = w
             
         return graph
                 
