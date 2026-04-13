@@ -90,7 +90,7 @@ class Menu_window(Tk):
         
         home_btn = Button(self.toggle_menu, text='Home',
                             font=('Bold', 20), bg='#ffb515', fg='white',
-                            activebackground='#ffb515', activeforeground='white',)
+                            activebackground='#ffb515', activeforeground='white')
         home_btn.place(x=20, y=20)
         
         setttings_btn = Button(self.toggle_menu, text='Help',
@@ -110,7 +110,7 @@ class Menu_window(Tk):
         
         help_btn = Button(self.toggle_menu, text='Quit',
                             font=('Bold', 20), bg='#ffb515', fg='white',
-                            activebackground='#ffb515', activeforeground='white',)
+                            activebackground='#ffb515', activeforeground='white')
         help_btn.place(x=20, y=260)
 
 
