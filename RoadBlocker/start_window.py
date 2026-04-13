@@ -89,7 +89,7 @@ class Menu_window(Tk):
                             activebackground='#ffb515', activeforeground='white',)
         home_btn.place(x=20, y=20)
         
-        setttings_btn = Button(self.toggle_menu, text='Settings',
+        setttings_btn = Button(self.toggle_menu, text='Help',
                                 font=('Bold', 20), bg='#ffb515', fg='white',
                                 activebackground='#ffb515', activeforeground='white',)
         setttings_btn.place(x=20, y=80)
@@ -99,12 +99,12 @@ class Menu_window(Tk):
                             activebackground='#ffb515', activeforeground='white', command=traffic_data_window)
         location_search_buttton.place(x=20, y=140)
         
-        aboutus_btn = Button(self.toggle_menu, text='About Us',
-                                font=('Bold', 16), bg='#ffb515', fg='white',
+        aboutus_btn = Button(self.toggle_menu, text='Credits',
+                                font=('Bold', 20), bg='#ffb515', fg='white',
                                 activebackground='#ffb515', activeforeground='white',command=self.show_about)
         aboutus_btn.place(x=20, y=200)
         
-        help_btn = Button(self.toggle_menu, text='Help',
+        help_btn = Button(self.toggle_menu, text='Quit',
                             font=('Bold', 20), bg='#ffb515', fg='white',
                             activebackground='#ffb515', activeforeground='white',)
         help_btn.place(x=20, y=260)
@@ -175,12 +175,39 @@ class traffic_data_window(Tk):
         lg = LocationGetter()
         tg = TrafficGetter()
 
+        #created a function to get the api and separate design from logic
         def get_api_data(self):
-            api_key = "zTfX7b0hg5V9N5Jzi0bngmq1lFL7vmms"
-            lat, lon = lg.current_location
-            lat = float(lat)
-            lon = float(lon)
-            zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
+            try:
+                api_key = "zTfX7b0hg5V9N5Jzi0bngmq1lFL7vmms"
+                lat, lon = lg.current_location
+                lat = float(lat)
+                lon = float(lon)
+                zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
+
+                lg = LocationGetter()
+                tg = TrafficGetter()
+            
+                lat, lon = lg.current_location
+                lat = float(lat)
+                lon = float(lon)
+                zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
+                
+                tg.save_traffic_image_from_x_y_to_file(api_key, x, y, zoom)
+                tg.show_traffic_image()
+                    
+                tg.save_traffic_data_from_coords_to_file(api_key, lat, lon, zoom)
+                    
+                current_speed, free_flow_speed, is_road_closed = tg.get_simple_traffic_data_from_file()
+                    
+                tg.save_traffic_tile_to_file(api_key, x, y, zoom)
+                tg.save_pbf_as_json()
+                tg.save_weighted_graph_from_file_to_file()
+                tg.save_pbf_as_json()
+                data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
+
+            except:
+                print("!!Error!!--Failed to load traffic from api---!!")
+
     '''     
     def update_data(self):
         
