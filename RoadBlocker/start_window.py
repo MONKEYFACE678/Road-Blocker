@@ -9,7 +9,7 @@ from tkinter import *
 from tkinter import ttk
 import PIL.Image as im
 import PIL.ImageTk as imtk
-from tkinter import filedialog, messagebox
+from PIL import Image
 import os as os
 import LocationGetter 
 import TrafficGetter 
@@ -94,13 +94,13 @@ class Menu_window(Tk):
                                 activebackground='#ffb515', activeforeground='white',)
         setttings_btn.place(x=20, y=80)
         
-        cities_btn = Button(self.toggle_menu, text='Cities',
+        location_search_buttton = Button(self.toggle_menu, text='Search',
                             font=('Bold', 20), bg='#ffb515', fg='white',
-                            activebackground='#ffb515', activeforeground='white',)
-        cities_btn.place(x=20, y=140)
+                            activebackground='#ffb515', activeforeground='white', command=traffic_data_window)
+        location_search_buttton.place(x=20, y=140)
         
         aboutus_btn = Button(self.toggle_menu, text='About Us',
-                                font=('Bold', 20), bg='#ffb515', fg='white',
+                                font=('Bold', 16), bg='#ffb515', fg='white',
                                 activebackground='#ffb515', activeforeground='white',command=self.show_about)
         aboutus_btn.place(x=20, y=200)
         
@@ -117,8 +117,7 @@ class Menu_window(Tk):
         self.toggle_button.config(text='⨉')
         self.toggle_button.config(command=collapse_toggle_menu)
 
-    #add the get_traffic_window which will contain the update data function
-    #and the widgets associated w that . . .
+ 
 
             
     def show_about(self):
@@ -129,7 +128,7 @@ class Menu_window(Tk):
 
 
 
-
+#about us window class, where we talk about all of the team members
 
 class about_us_window(Tk):
     def __init__(self):
@@ -152,8 +151,10 @@ class about_us_window(Tk):
         self.about_label = Label(self, text=self.info, font=("Montserrat", 14),bg ="#EBF0A4", justify="left")
         self.about_label.pack(padx=20, pady=20)
         
-
-
+class button_window(Tk):
+     def __init__(self):
+        super().__init__()
+        self.geometry("400x500")
 
 
 
@@ -161,8 +162,26 @@ class traffic_data_window(Tk):
     def __init__(self):
         super().__init__()
 
-        self.geometry("900x500")
+        self.geometry("900x600")
 
+        #this is the frame that will hold the image that gets loaded from api, with city label
+        bg_frame =Frame(self, bg="lightblue", width=200, height=100, bd=3, relief=RIDGE)
+        bg_frame.place(x = 250, y=10, width=600, height=550, anchor='nw')
+
+        city_label = Label()
+        city_label.place(anchor='center',x=400, y=10)
+
+
+        lg = LocationGetter()
+        tg = TrafficGetter()
+
+        def get_api_data(self):
+            api_key = "zTfX7b0hg5V9N5Jzi0bngmq1lFL7vmms"
+            lat, lon = lg.current_location
+            lat = float(lat)
+            lon = float(lon)
+            zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
+    '''     
     def update_data(self):
         
         lg = LocationGetter.LocationGetter()
@@ -193,18 +212,30 @@ class traffic_data_window(Tk):
     , textvariable=data_string, font=("Arial", 12), justify="center")
         data_lbl.grid(column=1, row=1)
                     
-      
-        
-   
-      
+        use_your_loc_button = Button(traffic_data_window, text="Use your current location", command=lg.get_location_coordinates_from_ip)
+        use_your_loc_button.grid(row=0)
+            
+        e1 = Entry(traffic_data_window)
+        e1.insert(0,"Enter Location Here...")
+        e1.grid(row=1)
+            
+        use_entered_loc_button = Button(traffic_data_window, text="Submit address", command=lambda:lg.get_location_coordinates_from_address(e1.get()))
+        use_entered_loc_button.grid(row=2)
+            
+        show_data_button =Button(traffic_data_window, text="Show data for location", command=self.update_data)
+        show_data_button.grid(column=1)
+            
 
+        Start_data_window_button = Button(self, text="Get Data", command=traffic_data_window)
+        Start_data_window_button.pack(pady=10)
 
+  '''      
 
-    
  
 if __name__ == "__main__":
 
     start = Master_window()
+    
     start.mainloop()
 
 
