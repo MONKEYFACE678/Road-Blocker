@@ -1,96 +1,271 @@
-# This is a traffic simulation main menu screen that I'm going to construct
-# The main menu will have the following options such as Start simulation settings about US credits and a quit button
-# I will be using tkinter to create the main menu screen and import the buttons that will hav mouse interaction and will be able to click on the buttons to navigate to different screens such as the settings screen and the about us screen
+'''
+-----want to eventually add a sound of a car revving up when app begins
+
+'''
+
+
 
 from tkinter import *
+from tkinter import ttk
 import PIL.Image as im
 import PIL.ImageTk as imtk
+from PIL import Image
+import os as os
+import LocationGetter 
+import TrafficGetter 
 
 
-import tkinter.font as tkFont
-
-
-
-
-class Windows_Frames(Tk):
+class Master_window(Tk):
+    
     def __init__(self):
         super().__init__()
-
         #title,icon,size
-        self.title("ROADBLOCKR MAIN MENU")
-        #ask caden to design icon for roadblockr
+       
+       
+        self.title("ROADBLOCKR")
+        
         self.iconbitmap("")
         self.geometry('800x650')
         
-        
-    def start_frame(self):
-        self.start_frame = Frame(self, width=800,height=650)
+        self.main_frame = Frame(self)
         #setup for start button, image background, and fonts...
         self.img = PhotoImage(file="RoadBlocker\start_window.png").subsample(3)
         self.bg_img = Label(self, image = self.img)
         self.bg_img.pack(fill="both", expand=True)
 
-       
+        self.title_img = PhotoImage(file = "RoadBlocker\\title\\title_rb.png").subsample(2)
+        self.title = Label(self, image = self.title_img, bg ="#474545",borderwidth=9, relief="raised")
+        self.title.place(x=80, y=15)
 
-    
-
-        self.start_button = Button(self, text="Start", width=15,height=2,font='helvetica', 
-        background="#F9881F",relief="flat")
+        
+        self.start_button = Button(self, text="Start", width=15,height=2,font='Montserrat', 
+        background="#FD8413",relief="flat", command=self.show_main_menu)
         self.start_button.place(x=330, y=539)
+        
+    def show_main_menu(self):
+        Menu_window()
+        
 
-    def display_fonts(self):
-        self.letter_r = PhotoImage(file="RoadBlocker/tire_r.png").subsample(18)
-        self.r = Label(self,image = self.letter_r)
-        self.r.place(x=30,y=30)
-
-    def main_menu_frame(self):
-        pass
+        
 
 
-      
+class Menu_window(Tk):
+    def __init__(self):
+        #send super() to Tk 
+        super().__init__()
+        #title,icon,size 
+        self.geometry("300x500")
+        
+        self.head_frame = Frame(self, bg="#ffb515",
+                    highlightbackground='white', highlightthickness=1)
+
+        self.toggle_button = Button(self.head_frame, text='≡', bg="#ca8d09", fg='white', 
+                    font=('Bold', 20), bd=0,
+                    activebackground="#ca8d09", activeforeground='white', 
+                    command=self.toggle_menu_open)
+
+        self.toggle_button.pack(side=LEFT)
+
+        self.title_lb = Label(self.head_frame, text='Road BlockR Hub', bg="#ffb515", fg='white',
+                font=('Bold', 20))
+
+        self.title_lb.pack(side=LEFT)
+
+        self.head_frame.pack(side=TOP, fill=X)
+        self.head_frame.pack_propagate(False)
+        self.head_frame.configure(height=50)
+        
+    def toggle_menu_open(self):
+        
+        def collapse_toggle_menu(self):
+            self.toggle_menu.destroy()
+            self.toggle_button.config(text='≡')
+            self.toggle_button.config(command=self.toggle_menu_open)
+
+        self.toggle_menu = Frame(self, bg='#ffb515')
+        
+        home_btn = Button(self.toggle_menu, text='Home',
+                            font=('Bold', 20), bg='#ffb515', fg='white',
+                            activebackground='#ffb515', activeforeground='white',)
+        home_btn.place(x=20, y=20)
+        
+        setttings_btn = Button(self.toggle_menu, text='Help',
+                                font=('Bold', 20), bg='#ffb515', fg='white',
+                                activebackground='#ffb515', activeforeground='white',)
+        setttings_btn.place(x=20, y=80)
+        
+        location_search_buttton = Button(self.toggle_menu, text='Search',
+                            font=('Bold', 20), bg='#ffb515', fg='white',
+                            activebackground='#ffb515', activeforeground='white', command=traffic_data_window)
+        location_search_buttton.place(x=20, y=140)
+        
+        aboutus_btn = Button(self.toggle_menu, text='Credits',
+                                font=('Bold', 20), bg='#ffb515', fg='white',
+                                activebackground='#ffb515', activeforeground='white',command=self.show_about)
+        aboutus_btn.place(x=20, y=200)
+        
+        help_btn = Button(self.toggle_menu, text='Quit',
+                            font=('Bold', 20), bg='#ffb515', fg='white',
+                            activebackground='#ffb515', activeforeground='white',)
+        help_btn.place(x=20, y=260)
 
 
-    
+        window_height = self.winfo_height()
+
+        self.toggle_menu.place(x=0, y=50, height=window_height, width=200)
+        
+        self.toggle_button.config(text='⨉')
+        self.toggle_button.config(command=collapse_toggle_menu)
+
  
 
-'''
-        def about_us():
-        about = Main_Menu.Toplevel(win)
-        about.title("About Us")
-        about.geometry("500x350")
+            
+    def show_about(self):
+            about_us_window()
+
+    def update_data(self):
+            traffic_data_window()
+
+
+
+#about us window class, where we talk about all of the team members
+
+class about_us_window(Tk):
+    def __init__(self):
+        super().__init__()
+
+        self.geometry("1500x500")
+
+        self.info = (
+                "Road BlockR:\n"
+                "This is project that is created to simulate tracfic flows and to test different traffic management strategies.\n"
+                "This program was developed by:\n\n" 
+                "Jayson Coleman\n" 
+                "Angel Carrillo\n"
+                "Caden Saiza\n\n"
+                "We are all students at the University of New Mexico State Alamorgordo and we created this project as part of our data structures and algorithms class\n"
+                "to learn how to design and implement data_windows that can be helpful for students even when they learning how to drive and to test different\n" 
+                "traffic management strategies that can be implemented in real life to improve traffic flow and reduce congestion."
+            )
+            
+        self.about_label = Label(self, text=self.info, font=("Montserrat", 14),bg ="#EBF0A4", justify="left")
+        self.about_label.pack(padx=20, pady=20)
         
-        info = (
-            "Road BlockR:\n"
-            "This is project that is created to simulate tracfic flows and to test different traffic management strategies.\n"
-            "This program was developed by:\n\n" 
-            "Jayson Coleman\n" 
-            "Angel Carrillo\n"
-            "Caden Saiza\n\n"
-            "We are all students at the Univeristy of New Mexico State Alamorgordo and we created this project as part of our computer science class\n"
-            "to learn how to design and implement simulations that can be helpful for students even when they learning how to drive and to test different\n" 
-            "traffic management strategies that can be implemented in real life to improve traffic flow and reduce congestion."
-        )
+class button_window(Tk):
+     def __init__(self):
+        super().__init__()
+        self.geometry("400x500")
+
+
+
+class traffic_data_window(Tk):
+    def __init__(self):
+        super().__init__()
+
+        self.geometry("900x600")
+
+        #this is the frame that will hold the image that gets loaded from api, with city label
+        bg_frame =Frame(self, bg="lightblue", width=200, height=100, bd=3, relief=RIDGE)
+        bg_frame.place(x = 250, y=10, width=600, height=550, anchor='nw')
+
+        city_label = Label()
+        city_label.place(anchor='center',x=400, y=10)
+
+
+        lg = LocationGetter()
+        tg = TrafficGetter()
+
+        #created a function to get the api and separate design from logic
+        def get_api_data(self):
+            try:
+                api_key = "zTfX7b0hg5V9N5Jzi0bngmq1lFL7vmms"
+                lat, lon = lg.current_location
+                lat = float(lat)
+                lon = float(lon)
+                zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
+
+                lg = LocationGetter()
+                tg = TrafficGetter()
+            
+                lat, lon = lg.current_location
+                lat = float(lat)
+                lon = float(lon)
+                zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
+                
+                tg.save_traffic_image_from_x_y_to_file(api_key, x, y, zoom)
+                tg.show_traffic_image()
+                    
+                tg.save_traffic_data_from_coords_to_file(api_key, lat, lon, zoom)
+                    
+                current_speed, free_flow_speed, is_road_closed = tg.get_simple_traffic_data_from_file()
+                    
+                tg.save_traffic_tile_to_file(api_key, x, y, zoom)
+                tg.save_pbf_as_json()
+                tg.save_weighted_graph_from_file_to_file()
+                tg.save_pbf_as_json()
+                data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
+
+            except:
+                print("!!Error!!--Failed to load traffic from api---!!")
+
+    '''     
+    def update_data(self):
         
-        tk.Label(about, text=info, font=("Arial", 12), justify="left").pack(padx=20, pady=20)
+        lg = LocationGetter.LocationGetter()
+        tg = TrafficGetter.TrafficGetter()
+            
+        api_key = "zTfX7b0hg5V9N5Jzi0bngmq1lFL7vmms"
+        lat, lon = lg.current_location
+        lat = float(lat)
+        lon = float(lon)
+        zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
+                
+        tg.save_traffic_image_from_x_y_to_file(api_key, x, y, zoom)
+        tg.show_traffic_image()
+                    
+        tg.save_traffic_data_from_coords_to_file(api_key, lat, lon, zoom)
+                    
+        current_speed, free_flow_speed, is_road_closed = tg.get_simple_traffic_data_from_file()
+                    
+        tg.save_traffic_tile_to_file(api_key, x, y, zoom)
+        tg.save_pbf_as_json()
+        tg.save_weighted_graph_from_file_to_file()
+        tg.save_pbf_as_json()
+        data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
+                
+        data_string = StringVar(traffic_data_window
+    , "No Data Currently")
+        data_lbl = Label(traffic_data_window
+    , textvariable=data_string, font=("Arial", 12), justify="center")
+        data_lbl.grid(column=1, row=1)
+                    
+        use_your_loc_button = Button(traffic_data_window, text="Use your current location", command=lg.get_location_coordinates_from_ip)
+        use_your_loc_button.grid(row=0)
+            
+        e1 = Entry(traffic_data_window)
+        e1.insert(0,"Enter Location Here...")
+        e1.grid(row=1)
+            
+        use_entered_loc_button = Button(traffic_data_window, text="Submit address", command=lambda:lg.get_location_coordinates_from_address(e1.get()))
+        use_entered_loc_button.grid(row=2)
+            
+        show_data_button =Button(traffic_data_window, text="Show data for location", command=self.update_data)
+        show_data_button.grid(column=1)
+            
 
-    Start_Simulation_button = tk.Button(win, text="Start Simulation", command=lambda: print("Start Simulation"))
-    Start_Simulation_button.pack(pady=10)
+        Start_data_window_button = Button(self, text="Get Data", command=traffic_data_window)
+        Start_data_window_button.pack(pady=10)
 
-    Settings_button = tk.Button(win, text="Settings", command=lambda: print("Settings"))
-    Settings_button.pack(pady=10)
+  '''      
 
-    #For the the about us screen takes you to a new screen that has information about the project and the team members
-    About_Us_button = tk.Button(win, text="About Us", command=about_us)
-    About_Us_button.pack(pady=10)
+ 
+if __name__ == "__main__":
 
-    Quit_button = tk.Button(win, text="Quit", command=win.destroy)
-    Quit_button.pack(pady=10)
-    '''
+    start = Master_window()
+    
+    start.mainloop()
 
-start = Windows_Frames()
-start.start_frame()
-start.display_fonts()
-start.mainloop()
+
  
 
 
