@@ -175,8 +175,34 @@ class help_window(Tk):
         self.geometry("600x500")
 
 class traffic_data_window(Tk):
+    
     def __init__(self):
+        def update_data():
+            api_key = "zTfX7b0hg5V9N5Jzi0bngmq1lFL7vmms"
+            
+            lat, lon = lg.current_location
+            lat = float(lat)
+            lon = float(lon)
+            zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
+                    
+            tg.save_traffic_image_from_x_y_to_file(api_key, x, y, zoom)
+            
+            tg.show_traffic_image()
+                        
+            tg.save_traffic_data_from_coords_to_file(api_key, lat, lon, zoom)
+                        
+            current_speed, free_flow_speed, is_road_closed = tg.get_simple_traffic_data_from_file()
+                        
+            tg.save_traffic_tile_to_file(api_key, x, y, zoom)
+            tg.save_pbf_as_json()
+            tg.save_weighted_graph_from_file_to_file()
+            
+            data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
+        
+    
         super().__init__()
+        lg = LocationGetter.LocationGetter()
+        tg = TrafficGetter.TrafficGetter()
         dirname = os.path.dirname(__file__)
         self.data_folder = os.path.join(dirname,"data")
         
@@ -194,59 +220,23 @@ class traffic_data_window(Tk):
 
         city_label = Label()
         city_label.place(anchor='center',x=400, y=10)
-
-    def update_data(self):
         
-        lg = LocationGetter.LocationGetter()
-        tg = TrafficGetter.TrafficGetter()
+        data_string = StringVar(self, "No Data Currently")
+        data_lbl = Label(self, textvariable=data_string, font=("Arial", 12), justify="center")
+        data_lbl.place(x=0,y=0)
+                    
+        use_your_loc_button = Button(self, text="Use your current location", command=lg.get_location_coordinates_from_ip)
+        use_your_loc_button.place(x=0,y=20)
             
-        api_key = "zTfX7b0hg5V9N5Jzi0bngmq1lFL7vmms"
-        lat, lon = lg.current_location
-        lat = float(lat)
-        lon = float(lon)
-        zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
-                
-        tg.save_traffic_image_from_x_y_to_file(api_key, x, y, zoom)
-        
-        tg.show_traffic_image()
-                    
-        tg.save_traffic_data_from_coords_to_file(api_key, lat, lon, zoom)
-                    
-        current_speed, free_flow_speed, is_road_closed = tg.get_simple_traffic_data_from_file()
-                    
-        tg.save_traffic_tile_to_file(api_key, x, y, zoom)
-        tg.save_pbf_as_json()
-        tg.save_weighted_graph_from_file_to_file()
-      
-
-      #get the tkinter button stuff to display data
-        data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
-                
-        data_string = StringVar(traffic_data_window
-    , "No Data Currently")
-        data_lbl = Label(traffic_data_window
-    , textvariable=data_string, font=("Arial", 12), justify="center")
-        data_lbl.grid(column=1, row=1)
-                    
-        use_your_loc_button = Button(traffic_data_window, text="Use your current location", command=lg.get_location_coordinates_from_ip)
-        use_your_loc_button.grid(row=0)
-            
-        e1 = Entry(traffic_data_window)
+        e1 = Entry(self)
         e1.insert(0,"Enter Location Here...")
-        e1.grid(row=1)
+        e1.place(x=0,y=50)
             
-        use_entered_loc_button = Button(traffic_data_window, text="Submit address", command=lambda:lg.get_location_coordinates_from_address(e1.get()))
-        use_entered_loc_button.grid(row=2)
+        use_entered_loc_button = Button(self, text="Submit address", command=lambda:lg.get_location_coordinates_from_address(e1.get()))
+        use_entered_loc_button.place(x=0,y=75)
             
-        show_data_button =Button(traffic_data_window, text="Show data for location", command=self.update_data)
-        show_data_button.grid(column=1)
-            
-
-        Start_data_window_button = Button(self, text="Get Data", command=traffic_data_window)
-        Start_data_window_button.pack(pady=10)
-
-      
-
+        update_data_button = Button(self, text = "Get Data", command = update_data)
+        update_data_button.place(x=0,y=100)
  
 if __name__ == "__main__":
 
