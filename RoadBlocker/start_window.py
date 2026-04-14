@@ -110,7 +110,7 @@ class Menu_window(Tk):
                             activebackground='#ffb515', activeforeground='white', command=traffic_data_window)
         location_search_buttton.place(x=20, y=140)
         
-        aboutus_btn = Button(self.toggle_menu, text='Credits',
+        aboutus_btn = Button(self.toggle_menu, text='About us',
                                 font=('Bold', 20), bg='#ffb515', fg='white',
                                 activebackground='#ffb515', activeforeground='white',command=self.show_about)
         aboutus_btn.place(x=20, y=200)
@@ -187,45 +187,6 @@ class traffic_data_window(Tk):
         city_label = Label()
         city_label.place(anchor='center',x=400, y=10)
 
-
-        lg = LocationGetter.LocationGetter()
-        tg = TrafficGetter.TrafficGetter()
-
-        #created a function to get the api and separate design from logic
-        def get_api_data(self):
-            try:
-                lg = LocationGetter.LocationGetter()
-                tg = TrafficGetter.TrafficGetter()
-                
-                api_key = "zTfX7b0hg5V9N5Jzi0bngmq1lFL7vmms"
-                lat, lon = lg.current_location
-                lat = float(lat)
-                lon = float(lon)
-                zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
-            
-                lat, lon = lg.current_location
-                lat = float(lat)
-                lon = float(lon)
-                zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
-                
-                tg.save_traffic_image_from_x_y_to_file(api_key, x, y, zoom)
-                tg.show_traffic_image()
-                    
-                tg.save_traffic_data_from_coords_to_file(api_key, lat, lon, zoom)
-                    
-                current_speed, free_flow_speed, is_road_closed = tg.get_simple_traffic_data_from_file()
-                    
-                tg.save_traffic_tile_to_file(api_key, x, y, zoom)
-                tg.save_pbf_as_json()
-                tg.save_weighted_graph_from_file_to_file()
-                tg.save_pbf_as_json()
-                #data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
-
-            except:
-                print("!!Error!!--Failed to load traffic from api---!!")
-
-#commented out currently becuase I want to put the design separate form data
-    '''     
     def update_data(self):
         
         lg = LocationGetter.LocationGetter()
@@ -238,6 +199,7 @@ class traffic_data_window(Tk):
         zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
                 
         tg.save_traffic_image_from_x_y_to_file(api_key, x, y, zoom)
+        
         tg.show_traffic_image()
                     
         tg.save_traffic_data_from_coords_to_file(api_key, lat, lon, zoom)
@@ -247,7 +209,9 @@ class traffic_data_window(Tk):
         tg.save_traffic_tile_to_file(api_key, x, y, zoom)
         tg.save_pbf_as_json()
         tg.save_weighted_graph_from_file_to_file()
-        tg.save_pbf_as_json()
+      
+
+      #get the tkinter button stuff to display data
         data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
                 
         data_string = StringVar(traffic_data_window
@@ -273,13 +237,13 @@ class traffic_data_window(Tk):
         Start_data_window_button = Button(self, text="Get Data", command=traffic_data_window)
         Start_data_window_button.pack(pady=10)
 
-  '''      
+      
 
  
 if __name__ == "__main__":
 
     start = Master_window()
-    
+   
     start.mainloop()
 
 
