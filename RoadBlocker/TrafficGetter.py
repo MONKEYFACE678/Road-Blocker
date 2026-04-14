@@ -77,31 +77,21 @@ class TrafficGetter:
         with open(os.path.join(self.data_folder, "traffic_tile.json"), "r", encoding="utf-8") as in_file:
             data = json.load(in_file)
 
-        node_map = {} 
-        nodes = []
-        edges = []
+        node_map = {}
         graph = {}
         node_id_counter = 0
 
-        def get_node_id(lat, lon):
+        def get_node_id(x, y):
             nonlocal node_id_counter
-
-            key = (lat, lon)
+            key = (x, y)
             if key not in node_map:
                 node_map[key] = node_id_counter
-                nodes.append({
-                    "id": node_id_counter,
-                    "lat": lat,
-                    "lon": lon
-                })
                 node_id_counter += 1
             return node_map[key]
 
-        def distance(lat1, lon1, lat2, lon2):
-            # simple Euclidean (fast)
-            return math.sqrt((lat2 - lat1)**2 + (lon2 - lon1)**2)
+        def distance(x1, y1, x2, y2):
+            return math.hypot(x2 - x1, y2 - y1)
 
-        # Iterate layers
         for layer in data.values():
             for feature in layer.get("features", []):
                 geom = feature.get("geometry", {})
@@ -114,27 +104,25 @@ class TrafficGetter:
                 if len(coords) < 2:
                     continue
 
-                # Try to get speed (fallback if missing)
-                speed = props.get("speed", 1)
-                if speed == 0:
-                    speed = 1
-
-                # Build edges
                 for i in range(len(coords) - 1):
-                    lon1, lat1 = coords[i]
-                    lon2, lat2 = coords[i + 1]
+                    x1, y1 = coords[i]
+                    x2, y2 = coords[i + 1]
 
-                    id1 = get_node_id(lat1, lon1)
-                    id2 = get_node_id(lat2, lon2)
+                    id1 = get_node_id(x1, y1)
+                    id2 = get_node_id(x2, y2)
 
-                    dist = distance(lat1, lon1, lat2, lon2)
+                    dist = distance(x1, y1, x2, y2)
+                    weight = dist
 
-                    weight = dist / speed  # travel cost
+                    graph.setdefault(id1, {})
+                    graph.setdefault(id2, {})
 
-                    graph.setdefault(id1, {})[id2] = weight
-                    graph.setdefault(id2, {})[id1] = weight
+                    # keep smallest weight
+                    if id2 not in graph[id1] or weight < graph[id1][id2]:
+                        graph[id1][id2] = weight
+                        graph[id2][id1] = weight
 
-        with open(os.path.join(self.data_folder, "weighted_graph.json"), "w",encoding = "utf-8") as out_file:
+        with open(os.path.join(self.data_folder, "weighted_graph.json"), "w", encoding="utf-8") as out_file:
             json.dump(graph, out_file, indent=2)
         
         
