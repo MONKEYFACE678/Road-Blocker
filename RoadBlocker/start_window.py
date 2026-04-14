@@ -5,6 +5,11 @@
 2. Move each class to its own file
 -----
 3. Finish the traffic_window and implement from Trafficgetter, and Location getter files
+-----
+4. Redesign the labels to look better on ui, Home,search 
+instructions, about us, quit
+-----
+5.
 '''
 
 
@@ -93,7 +98,7 @@ class Menu_window(Tk):
                             activebackground='#ffb515', activeforeground='white')
         home_btn.place(x=20, y=20)
         
-        setttings_btn = Button(self.toggle_menu, text='Help',
+        setttings_btn = Button(self.toggle_menu, text='Settings',
                                 font=('Bold', 20), bg='#ffb515', fg='white',
                                 activebackground='#ffb515', activeforeground='white',)
         setttings_btn.place(x=20, y=80)
@@ -108,9 +113,9 @@ class Menu_window(Tk):
                                 activebackground='#ffb515', activeforeground='white',command=self.show_about)
         aboutus_btn.place(x=20, y=200)
         
-        help_btn = Button(self.toggle_menu, text='Quit',
+        help_btn = Button(self.toggle_menu, text='Instructions',
                             font=('Bold', 20), bg='#ffb515', fg='white',
-                            activebackground='#ffb515', activeforeground='white')
+                            activebackground='#ffb515', activeforeground='white',command=self.show_help)
         help_btn.place(x=20, y=260)
 
 
@@ -130,6 +135,8 @@ class Menu_window(Tk):
     def update_data(self):
             traffic_data_window()
 
+    def show_help(self):
+            help_window()
 
 
 #about us window class, where we talk about all of the team members
@@ -160,7 +167,10 @@ class button_window(Tk):
         super().__init__()
         self.geometry("400x500")
 
-
+class help_window(Tk):
+    def __init__(self):
+        super().__init__()
+        self.geometry("600x500")
 
 class traffic_data_window(Tk):
     def __init__(self):
