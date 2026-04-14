@@ -28,21 +28,23 @@ class Master_window(Tk):
     
     def __init__(self):
         super().__init__()
-        #title,icon,size
-       
-       
-        self.title("ROADBLOCKR")
         
+        #declare resources folder
+        dirname = os.path.dirname(__file__)
+        self.resources = os.path.join(dirname,"resources")
+        
+        #title,icon,size
+        self.title = "ROADBLOCKR"      
         self.iconbitmap("")
         self.geometry('800x650')
         
         self.main_frame = Frame(self)
         #setup for start button, image background, and fonts...
-        self.img = PhotoImage(file="RoadBlocker\start_window.png").subsample(3)
+        self.img = PhotoImage(file=os.path.join(self.resources,"start_window.png")).subsample(3)
         self.bg_img = Label(self, image = self.img)
         self.bg_img.pack(fill="both", expand=True)
 
-        self.title_img = PhotoImage(file = "RoadBlocker\\title\\title_rb.png").subsample(2)
+        self.title_img = PhotoImage(file = os.path.join(self.resources,"title","title_rb.png")).subsample(2)
         self.title = Label(self, image = self.title_img, bg ="#474545",borderwidth=9, relief="raised")
         self.title.place(x=80, y=15)
 
@@ -86,7 +88,7 @@ class Menu_window(Tk):
         
     def toggle_menu_open(self):
         
-        def collapse_toggle_menu(self):
+        def collapse_toggle_menu():
             self.toggle_menu.destroy()
             self.toggle_button.config(text='≡')
             self.toggle_button.config(command=self.toggle_menu_open)
@@ -186,20 +188,20 @@ class traffic_data_window(Tk):
         city_label.place(anchor='center',x=400, y=10)
 
 
-        lg = LocationGetter()
-        tg = TrafficGetter()
+        lg = LocationGetter.LocationGetter()
+        tg = TrafficGetter.TrafficGetter()
 
         #created a function to get the api and separate design from logic
         def get_api_data(self):
             try:
+                lg = LocationGetter.LocationGetter()
+                tg = TrafficGetter.TrafficGetter()
+                
                 api_key = "zTfX7b0hg5V9N5Jzi0bngmq1lFL7vmms"
                 lat, lon = lg.current_location
                 lat = float(lat)
                 lon = float(lon)
                 zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
-
-                lg = LocationGetter()
-                tg = TrafficGetter()
             
                 lat, lon = lg.current_location
                 lat = float(lat)
@@ -217,7 +219,7 @@ class traffic_data_window(Tk):
                 tg.save_pbf_as_json()
                 tg.save_weighted_graph_from_file_to_file()
                 tg.save_pbf_as_json()
-                data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
+                #data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
 
             except:
                 print("!!Error!!--Failed to load traffic from api---!!")
