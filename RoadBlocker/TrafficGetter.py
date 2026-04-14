@@ -80,6 +80,7 @@ class TrafficGetter:
         node_map = {} 
         nodes = []
         edges = []
+        graph = {}
         node_id_counter = 0
 
         def get_node_id(lat, lon):
@@ -130,35 +131,17 @@ class TrafficGetter:
 
                     weight = dist / speed  # travel cost
 
-                    edges.append({
-                        "from": id1,
-                        "to": id2,
-                        "weight": weight
-                    })
-        graph = {
-            "nodes": nodes,
-            "edges": edges
-        }
+                    graph.setdefault(id1, {})[id2] = weight
+                    graph.setdefault(id2, {})[id1] = weight
+
         with open(os.path.join(self.data_folder, "weighted_graph.json"), "w",encoding = "utf-8") as out_file:
             json.dump(graph, out_file, indent=2)
         
         
     def load_weighted_graph_from_file(self):
         with open(os.path.join(self.data_folder, "weighted_graph.json"), "r",encoding = "utf-8") as in_file:
-            data = json.load(in_file)
-            
-        edges = data["edges"]
-        nodes = data["nodes"]
-        
-        graph = {}
-
-        for edge in edges:
-            src = edge["from"]
-            dst = edge["to"]
-            w = edge["weight"]
-
-            graph.setdefault(src, {})[dst] = w
-            graph.setdefault(dst, {})[src] = w
+            data = json.load(in_file)  
+        graph = data
             
         return graph
                 
