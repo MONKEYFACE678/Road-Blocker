@@ -177,6 +177,14 @@ class help_window(Tk):
 class traffic_data_window(Tk):
     def __init__(self):
         super().__init__()
+        dirname = os.path.dirname(__file__)
+        self.data_folder = os.path.join(dirname,"data")
+        
+        #Do this
+        #os.path.join(self.data_folder, "traffic_img.png")
+        
+        #Instead of this
+        #"Road Blocker\RoadBlocker\data\traffic_img.png"
 
         self.geometry("900x600")
 
