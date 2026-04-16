@@ -19,7 +19,6 @@ import os as os
 import LocationGetter 
 import TrafficGetter 
 
-
 class Master_window(Tk):
     
     def __init__(self):
@@ -43,7 +42,6 @@ class Master_window(Tk):
         self.title_img = PhotoImage(file = os.path.join(self.resources,"title","title_rb.png")).subsample(2)
         self.title_label = Label(self, image = self.title_img, bg ="#474545",borderwidth=9, relief="raised")
         self.title_label.place(x=80, y=15)
-
         
         self.start_button = Button(self, text="Start", width=15,height=2,font='Montserrat', 
         background="#FD8413",relief="flat", command=self.show_main_menu)
@@ -52,10 +50,6 @@ class Master_window(Tk):
     def show_main_menu(self):
         Menu_window()
         
-
-        
-
-
 class Menu_window(Toplevel):
     def __init__(self):
         #send super() to Tk 
@@ -116,7 +110,6 @@ class Menu_window(Toplevel):
                             activebackground='#ffb515', activeforeground='white',command=self.show_help)
         help_btn.place(x=20, y=260)
 
-
         window_height = self.winfo_height()
 
         self.toggle_menu.place(x=0, y=50, height=window_height, width=200)
@@ -124,9 +117,6 @@ class Menu_window(Toplevel):
         self.toggle_button.config(text='⨉')
         self.toggle_button.config(command=collapse_toggle_menu)
 
- 
-
-            
     def show_about(self):
             about_us_window()
 
@@ -135,7 +125,6 @@ class Menu_window(Toplevel):
 
     def show_help(self):
             help_window()
-
 
 #about us window class, where we talk about all of the team members
 
@@ -169,7 +158,6 @@ class help_window(Toplevel):
     def __init__(self):
         super().__init__()
         self.geometry("600x500")
-
 class traffic_data_window(Toplevel):
     
     def __init__(self):
@@ -201,7 +189,6 @@ class traffic_data_window(Toplevel):
             self.satelite_img_lbl.image = self.satelite_img # type: ignore
             
             data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
-        
     
         lg = LocationGetter.LocationGetter()
         tg = TrafficGetter.TrafficGetter()
@@ -248,8 +235,3 @@ if __name__ == "__main__":
     start = Master_window()
    
     start.mainloop()
-
-
- 
-
-
