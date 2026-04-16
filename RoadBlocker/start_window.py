@@ -11,11 +11,7 @@ instructions, about us, quit
 -----
 5.
 '''
-
-
-
 from tkinter import *
-from tkinter import ttk
 import PIL.Image as im
 import PIL.ImageTk as imtk
 from PIL import Image
@@ -34,7 +30,7 @@ class Master_window(Tk):
         self.resources = os.path.join(dirname,"resources")
         
         #title,icon,size
-        self.title = "ROADBLOCKR"      
+        self.title("ROADBLOCKR")
         self.iconbitmap("")
         self.geometry('800x650')
         
@@ -45,8 +41,8 @@ class Master_window(Tk):
         self.bg_img.pack(fill="both", expand=True)
 
         self.title_img = PhotoImage(file = os.path.join(self.resources,"title","title_rb.png")).subsample(2)
-        self.title = Label(self, image = self.title_img, bg ="#474545",borderwidth=9, relief="raised")
-        self.title.place(x=80, y=15)
+        self.title_label = Label(self, image = self.title_img, bg ="#474545",borderwidth=9, relief="raised")
+        self.title_label.place(x=80, y=15)
 
         
         self.start_button = Button(self, text="Start", width=15,height=2,font='Montserrat', 
@@ -60,7 +56,7 @@ class Master_window(Tk):
         
 
 
-class Menu_window(Tk):
+class Menu_window(Toplevel):
     def __init__(self):
         #send super() to Tk 
         super().__init__()
@@ -143,7 +139,7 @@ class Menu_window(Tk):
 
 #about us window class, where we talk about all of the team members
 
-class about_us_window(Tk):
+class about_us_window(Toplevel):
     def __init__(self):
         super().__init__()
 
@@ -164,19 +160,21 @@ class about_us_window(Tk):
         self.about_label = Label(self, text=self.info, font=("Montserrat", 14),bg ="#EBF0A4", justify="left")
         self.about_label.pack(padx=20, pady=20)
         
-class button_window(Tk):
+class button_window(Toplevel):
      def __init__(self):
         super().__init__()
         self.geometry("400x500")
 
-class help_window(Tk):
+class help_window(Toplevel):
     def __init__(self):
         super().__init__()
         self.geometry("600x500")
 
-class traffic_data_window(Tk):
+class traffic_data_window(Toplevel):
     
     def __init__(self):
+        super().__init__()
+        
         def update_data():
             api_key = "zTfX7b0hg5V9N5Jzi0bngmq1lFL7vmms"
             
@@ -186,9 +184,7 @@ class traffic_data_window(Tk):
             zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
                     
             tg.save_traffic_image_from_x_y_to_file(api_key, x, y, zoom)
-            
-            tg.show_traffic_image()
-                        
+                                    
             tg.save_traffic_data_from_coords_to_file(api_key, lat, lon, zoom)
                         
             current_speed, free_flow_speed, is_road_closed = tg.get_simple_traffic_data_from_file()
@@ -197,10 +193,16 @@ class traffic_data_window(Tk):
             tg.save_pbf_as_json()
             tg.save_weighted_graph_from_file_to_file()
             
+            img_path = os.path.join(self.data_folder, "map_img.png")
+
+            self.satelite_img = PhotoImage(file=img_path)
+            self.satelite_img_lbl.config(image=self.satelite_img)
+
+            self.satelite_img_lbl.image = self.satelite_img # type: ignore
+            
             data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
         
     
-        super().__init__()
         lg = LocationGetter.LocationGetter()
         tg = TrafficGetter.TrafficGetter()
         dirname = os.path.dirname(__file__)
@@ -216,6 +218,9 @@ class traffic_data_window(Tk):
 
         #this is the frame that will hold the image that gets loaded from api, with city label
         bg_frame =Frame(self, bg="lightblue", width=200, height=100, bd=3, relief=RIDGE)
+        self.satelite_img = PhotoImage()
+        self.satelite_img_lbl = Label(bg_frame)
+        self.satelite_img_lbl.pack(fill="both", expand=True) 
         bg_frame.place(x = 250, y=10, width=600, height=550, anchor='nw')
 
         city_label = Label()
