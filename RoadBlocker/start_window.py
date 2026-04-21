@@ -18,6 +18,7 @@ from PIL import Image
 import os as os
 import LocationGetter 
 import TrafficGetter 
+import traffic_data_window
 
 class Master_window(Tk):
     
@@ -92,7 +93,7 @@ class Menu_window(Toplevel):
         
         location_search_buttton = Button(self.toggle_menu, text='Search',
                             font=('Bold', 20), bg='#ffb515', fg='white',
-                            activebackground='#ffb515', activeforeground='white', command=traffic_data_window)
+                            activebackground='#ffb515', activeforeground='white', command=traffic_data_window.traffic_data_window)
         location_search_buttton.place(x=20, y=140)
         
         setttings_btn = Button(self.toggle_menu, text='Settings',
@@ -125,9 +126,6 @@ class Menu_window(Toplevel):
 
     def show_about(self):
             about_us_window()
-
-    def update_data(self):
-            traffic_data_window()
 
     def show_help(self):
             help_window()
@@ -167,9 +165,8 @@ class help_window(Toplevel):
     def __init__(self):
         super().__init__()
         self.geometry("600x500")
-
-
 class traffic_data_window(Toplevel):
+    
     def __init__(self):
         super().__init__()
 
