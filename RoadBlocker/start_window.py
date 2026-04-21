@@ -11,18 +11,13 @@ instructions, about us, quit
 -----
 5.
 '''
-
-
-
 from tkinter import *
-from tkinter import ttk
 import PIL.Image as im
 import PIL.ImageTk as imtk
 from PIL import Image
 import os as os
 import LocationGetter 
 import TrafficGetter 
-
 
 class Master_window(Tk):
     
@@ -34,7 +29,7 @@ class Master_window(Tk):
         self.resources = os.path.join(dirname,"resources")
         
         #title,icon,size
-        self.title = "ROADBLOCKR"      
+        self.title("ROADBLOCKR")
         self.iconbitmap("")
         self.geometry('800x650')
         
@@ -45,22 +40,17 @@ class Master_window(Tk):
         self.bg_img.pack(fill="both", expand=True)
 
         self.title_img = PhotoImage(file = os.path.join(self.resources,"title","title_rb.png")).subsample(2)
-        self.title = Label(self, image = self.title_img, bg ="#474545",borderwidth=9, relief="raised")
-        self.title.place(x=80, y=15)
-
+        self.title_label = Label(self, image = self.title_img, bg ="#474545",borderwidth=9, relief="raised")
+        self.title_label.place(x=80, y=15)
         
-        self.start_button = Button(self, text="Start", width=15,height=2,font='Montserrat', 
+        self.start_button = Button(self, text="Start", width=15,height=2,font=('Montserrat', 14), 
         background="#FD8413",relief="flat", command=self.show_main_menu)
         self.start_button.place(x=330, y=539)
         
     def show_main_menu(self):
         Menu_window()
         
-
-        
-
-
-class Menu_window(Tk):
+class Menu_window(Toplevel):
     def __init__(self):
         #send super() to Tk 
         super().__init__()
@@ -133,9 +123,6 @@ class Menu_window(Tk):
         self.toggle_button.config(text='⨉')
         self.toggle_button.config(command=collapse_toggle_menu)
 
- 
-
-            
     def show_about(self):
             about_us_window()
 
@@ -171,17 +158,17 @@ class about_us_window(Tk):
         self.about_label = Label(self, text=self.info, font=("Montserrat", 14),bg ="#EBF0A4", justify="left")
         self.about_label.pack(padx=20, pady=20)
         
-class button_window(Tk):
+class button_window(Toplevel):
      def __init__(self):
         super().__init__()
         self.geometry("400x500")
 
-class help_window(Tk):
+class help_window(Toplevel):
     def __init__(self):
         super().__init__()
         self.geometry("600x500")
-
-class traffic_data_window(Tk):
+class traffic_data_window(Toplevel):
+    
     def __init__(self):
         super().__init__()
 
@@ -226,33 +213,21 @@ class traffic_data_window(Tk):
     , textvariable=data_string, font=("Arial", 12), justify="center")
         data_lbl.grid(column=1, row=1)
                     
-        use_your_loc_button = Button(traffic_data_window, text="Use your current location", command=lg.get_location_coordinates_from_ip)
-        use_your_loc_button.grid(row=0)
+        use_your_loc_button = Button(self, text="Use your current location", command=lg.get_location_coordinates_from_ip)
+        use_your_loc_button.place(x=0,y=20)
             
-        e1 = Entry(traffic_data_window)
+        e1 = Entry(self)
         e1.insert(0,"Enter Location Here...")
-        e1.grid(row=1)
+        e1.place(x=0,y=50)
             
-        use_entered_loc_button = Button(traffic_data_window, text="Submit address", command=lambda:lg.get_location_coordinates_from_address(e1.get()))
-        use_entered_loc_button.grid(row=2)
+        use_entered_loc_button = Button(self, text="Submit address", command=lambda:lg.get_location_coordinates_from_address(e1.get()))
+        use_entered_loc_button.place(x=0,y=75)
             
-        show_data_button =Button(traffic_data_window, text="Show data for location", command=self.update_data)
-        show_data_button.grid(column=1)
-            
-
-        Start_data_window_button = Button(self, text="Get Data", command=traffic_data_window)
-        Start_data_window_button.pack(pady=10)
-
-      
-
+        update_data_button = Button(self, text = "Get Data", command = update_data)
+        update_data_button.place(x=0,y=100)
  
 if __name__ == "__main__":
 
     start = Master_window()
    
     start.mainloop()
-
-
- 
-
-

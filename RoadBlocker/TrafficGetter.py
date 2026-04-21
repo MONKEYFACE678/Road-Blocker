@@ -21,13 +21,20 @@ class TrafficGetter:
     def save_traffic_image_from_x_y_to_file(self, api_key, x, y, zoom):
         #Requests TomTom api for image
         response = requests.get(f"https://api.tomtom.com/map/1/tile/basic/night/{zoom}/{x}/{y}.png?key={api_key}", stream=True)
+        with open(os.path.join(self.data_folder, "map_img.png"), "wb") as out_file:
+            shutil.copyfileobj(response.raw, out_file)
+        del response
+        response = requests.get(f"https://api.tomtom.com/traffic/map/4/tile/flow/absolute/{zoom}/{x}/{y}.png?key={api_key}", stream=True)
         with open(os.path.join(self.data_folder, "traffic_img.png"), "wb") as out_file:
             shutil.copyfileobj(response.raw, out_file)
         del response
+        
     
     def show_traffic_image(self):
         #Shows saved image from save_traffic_image_from_x_y_to_file
         image = Image.open(os.path.join(self.data_folder, "traffic_img.png"))
+        image.show()
+        image = Image.open(os.path.join(self.data_folder, "map_img.png"))
         image.show()
         
     def save_traffic_data_from_coords_to_file(self, api_key, lat, lon, zoom):
