@@ -98,17 +98,19 @@ class Menu_window(Tk):
         home_btn = Button(self.toggle_menu, text='Home',
                             font=('Bold', 20), bg='#ffb515', fg='white',
                             activebackground='#ffb515', activeforeground='white')
-        home_btn.place(x=20, y=20)
-        
-        setttings_btn = Button(self.toggle_menu, text='Settings',
-                                font=('Bold', 20), bg='#ffb515', fg='white',
-                                activebackground='#ffb515', activeforeground='white',)
-        setttings_btn.place(x=20, y=80)
+        home_btn.place(x=20, y=20) 
         
         location_search_buttton = Button(self.toggle_menu, text='Search',
                             font=('Bold', 20), bg='#ffb515', fg='white',
                             activebackground='#ffb515', activeforeground='white', command=traffic_data_window)
         location_search_buttton.place(x=20, y=140)
+        
+        setttings_btn = Button(self.toggle_menu, text='Settings',
+                            font=('Bold', 20), bg='#ffb515', fg='white',
+                            activebackground='#ffb515', activeforeground='white',)
+        setttings_btn.place(x=20, y=80)
+        
+       
         
         aboutus_btn = Button(self.toggle_menu, text='About us',
                                 font=('Bold', 20), bg='#ffb515', fg='white',
@@ -120,6 +122,9 @@ class Menu_window(Tk):
                             activebackground='#ffb515', activeforeground='white',command=self.show_help)
         help_btn.place(x=20, y=260)
 
+
+      
+         
 
         window_height = self.winfo_height()
 
@@ -139,9 +144,11 @@ class Menu_window(Tk):
 
     def show_help(self):
             help_window()
-
+    
+    
 
 #about us window class, where we talk about all of the team members
+
 
 class about_us_window(Tk):
     def __init__(self):
@@ -187,7 +194,6 @@ class traffic_data_window(Tk):
         city_label = Label()
         city_label.place(anchor='center',x=400, y=10)
 
-    def update_data(self):
         
         lg = LocationGetter.LocationGetter()
         tg = TrafficGetter.TrafficGetter()
