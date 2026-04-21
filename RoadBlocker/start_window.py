@@ -65,8 +65,3 @@ class Master_window(Tk):
 
 
  
-if __name__ == "__main__":
-
-    start = Master_window()
-   
-    start.mainloop()
