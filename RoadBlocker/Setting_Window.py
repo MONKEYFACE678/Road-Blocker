@@ -1,4 +1,5 @@
-from tkinter import Frame, Label, Toplevel
+from tkinter import *
+
 
 class settings_window(Toplevel):
      def __init__(self):
@@ -11,7 +12,7 @@ class settings_window(Toplevel):
         density = Label(self, text="Traffic Density:", font=("Arial", 12))
         density.place(x=20, y=75)
         density_var = StringVar(value="Medium")
-        
+
         option_menu = OptionMenu(self, density_var, "Low", "Medium", "High")
         option_menu.place(x=20, y=100)
 

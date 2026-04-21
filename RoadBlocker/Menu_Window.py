@@ -41,15 +41,12 @@ class Menu_window(Toplevel):
 
         self.toggle_menu = Frame(self, bg='#ffb515')
         
-        home_btn = Button(self.toggle_menu, text='Home',
-                            font=('Bold', 20), bg='#ffb515', fg='white',
-                            activebackground='#ffb515', activeforeground='white')
-        home_btn.place(x=20, y=20) 
+    
         
         location_search_buttton = Button(self.toggle_menu, text='Search',
                             font=('Bold', 20), bg='#ffb515', fg='white',
                             activebackground='#ffb515', activeforeground='white', command=traffic_data_window.traffic_data_window)
-        location_search_buttton.place(x=20, y=140)
+        location_search_buttton.place(x=20, y=20)
         
         setttings_btn = Button(self.toggle_menu, text='Settings',
                             font=('Bold', 20), bg='#ffb515', fg='white',
@@ -59,12 +56,12 @@ class Menu_window(Toplevel):
         aboutus_btn = Button(self.toggle_menu, text='About us',
                                 font=('Bold', 20), bg='#ffb515', fg='white',
                                 activebackground='#ffb515', activeforeground='white',command=self.show_about)
-        aboutus_btn.place(x=20, y=200)
+        aboutus_btn.place(x=20, y=140)
         
         help_btn = Button(self.toggle_menu, text='Instructions',
                             font=('Bold', 20), bg='#ffb515', fg='white',
                             activebackground='#ffb515', activeforeground='white',command=self.show_help)
-        help_btn.place(x=20, y=260)
+        help_btn.place(x=20, y=200)
 
 
       
