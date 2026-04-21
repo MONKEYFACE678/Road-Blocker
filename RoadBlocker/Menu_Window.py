@@ -1,20 +1,10 @@
-from tkinter import *
-import PIL.Image as im
-import PIL.ImageTk as imtk
-from PIL import Image
 import os as os
-import LocationGetter 
-import TrafficGetter 
 import traffic_data_window
-import Menu_Window
 import About_Us_Window
-import start_window
 import Help_Window
-from tkinter import Frame, Label, Button,StringVar,Entry, Toplevel, RIDGE, PhotoImage
+from tkinter import Frame, Label, Button, Toplevel, LEFT, TOP, X
 import os
 import Setting_Window
-
-
 
 class Menu_window(Toplevel):
     def __init__(self):
@@ -65,8 +55,6 @@ class Menu_window(Toplevel):
                             font=('Bold', 20), bg='#ffb515', fg='white',
                             activebackground='#ffb515', activeforeground='white',command=self.show_settings)
         setttings_btn.place(x=20, y=80)
-        
-       
         
         aboutus_btn = Button(self.toggle_menu, text='About us',
                                 font=('Bold', 20), bg='#ffb515', fg='white',
