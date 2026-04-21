@@ -167,8 +167,9 @@ class help_window(Toplevel):
     def __init__(self):
         super().__init__()
         self.geometry("600x500")
+
+
 class traffic_data_window(Toplevel):
-    
     def __init__(self):
         super().__init__()
 
