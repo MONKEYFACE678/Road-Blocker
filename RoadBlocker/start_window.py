@@ -18,6 +18,7 @@ from PIL import Image
 import os as os
 import LocationGetter 
 import TrafficGetter 
+import traffic_data_window
 
 class Master_window(Tk):
     
@@ -92,7 +93,7 @@ class Menu_window(Toplevel):
         
         location_search_buttton = Button(self.toggle_menu, text='Search',
                             font=('Bold', 20), bg='#ffb515', fg='white',
-                            activebackground='#ffb515', activeforeground='white', command=traffic_data_window)
+                            activebackground='#ffb515', activeforeground='white', command=traffic_data_window.traffic_data_window)
         location_search_buttton.place(x=20, y=140)
         
         setttings_btn = Button(self.toggle_menu, text='Settings',
@@ -125,9 +126,6 @@ class Menu_window(Toplevel):
 
     def show_about(self):
             about_us_window()
-
-    def update_data(self):
-            traffic_data_window()
 
     def show_help(self):
             help_window()
@@ -167,64 +165,6 @@ class help_window(Toplevel):
     def __init__(self):
         super().__init__()
         self.geometry("600x500")
-class traffic_data_window(Toplevel):
-    
-    def __init__(self):
-        super().__init__()
-
-        self.geometry("900x600")
-
-        #this is the frame that will hold the image that gets loaded from api, with city label
-        bg_frame =Frame(self, bg="lightblue", width=200, height=100, bd=3, relief=RIDGE)
-        bg_frame.place(x = 250, y=10, width=600, height=550, anchor='nw')
-
-        city_label = Label()
-        city_label.place(anchor='center',x=400, y=10)
-
-        
-        lg = LocationGetter.LocationGetter()
-        tg = TrafficGetter.TrafficGetter()
-            
-        api_key = "zTfX7b0hg5V9N5Jzi0bngmq1lFL7vmms"
-        lat, lon = lg.current_location
-        lat = float(lat)
-        lon = float(lon)
-        zoom, x, y = lg.convert_location_to_tile_data(lat,lon, 12)
-                
-        tg.save_traffic_image_from_x_y_to_file(api_key, x, y, zoom)
-        
-        tg.show_traffic_image()
-                    
-        tg.save_traffic_data_from_coords_to_file(api_key, lat, lon, zoom)
-                    
-        current_speed, free_flow_speed, is_road_closed = tg.get_simple_traffic_data_from_file()
-                    
-        tg.save_traffic_tile_to_file(api_key, x, y, zoom)
-        tg.save_pbf_as_json()
-        tg.save_weighted_graph_from_file_to_file()
-      
-
-      #get the tkinter button stuff to display data
-        data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
-                
-        data_string = StringVar(traffic_data_window
-    , "No Data Currently")
-        data_lbl = Label(traffic_data_window
-    , textvariable=data_string, font=("Arial", 12), justify="center")
-        data_lbl.grid(column=1, row=1)
-                    
-        use_your_loc_button = Button(self, text="Use your current location", command=lg.get_location_coordinates_from_ip)
-        use_your_loc_button.place(x=0,y=20)
-            
-        e1 = Entry(self)
-        e1.insert(0,"Enter Location Here...")
-        e1.place(x=0,y=50)
-            
-        use_entered_loc_button = Button(self, text="Submit address", command=lambda:lg.get_location_coordinates_from_address(e1.get()))
-        use_entered_loc_button.place(x=0,y=75)
-            
-        update_data_button = Button(self, text = "Get Data", command = update_data)
-        update_data_button.place(x=0,y=100)
  
 if __name__ == "__main__":
 
