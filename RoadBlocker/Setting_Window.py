@@ -12,7 +12,8 @@ from tkinter import Frame, Label, Button,StringVar,Entry, Toplevel, RIDGE, Photo
 import os
 import start_window
 
-class help_window(Toplevel):
-    def __init__(self):
+
+class settings_window(Toplevel):
+     def __init__(self):
         super().__init__()
-        self.geometry("600x500")
+        self.geometry("400x500")
