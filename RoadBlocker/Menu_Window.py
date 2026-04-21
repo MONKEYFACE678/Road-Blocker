@@ -64,7 +64,9 @@ class Menu_window(Toplevel):
         help_btn.place(x=20, y=200)
 
 
-      
+        quit_btn = Button(self.toggle_menu, text='Quit', font=('Bold', 20), bg='#ffb515',fg='white',
+                        activebackground='#ffb515', activeforeground='white',)
+        quit_btn.place(x=20, y=260)
          
 
         window_height = self.winfo_height()
