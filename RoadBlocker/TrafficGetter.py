@@ -9,9 +9,6 @@ import mapbox_vector_tile
 import math
 import os
 
-
-
-
 class TrafficGetter:
     def __init__(self):
         dirname = os.path.dirname(__file__)
@@ -28,7 +25,6 @@ class TrafficGetter:
         with open(os.path.join(self.data_folder, "traffic_img.png"), "wb") as out_file:
             shutil.copyfileobj(response.raw, out_file)
         del response
-        
     
     def show_traffic_image(self):
         #Shows saved image from save_traffic_image_from_x_y_to_file
@@ -131,7 +127,6 @@ class TrafficGetter:
 
         with open(os.path.join(self.data_folder, "weighted_graph.json"), "w", encoding="utf-8") as out_file:
             json.dump(graph, out_file, indent=2)
-        
         
     def load_weighted_graph_from_file(self):
         with open(os.path.join(self.data_folder, "weighted_graph.json"), "r",encoding = "utf-8") as in_file:

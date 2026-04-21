@@ -1,17 +1,6 @@
-from tkinter import *
-import PIL.Image as im
-import PIL.ImageTk as imtk
-from PIL import Image
-import os as os
-import LocationGetter 
-import TrafficGetter 
-import traffic_data_window
-import Menu_Window
-from tkinter import Frame, Label, Button,StringVar,Entry, Toplevel, RIDGE, PhotoImage
-import os
+from tkinter import Label, Toplevel
 
-
-class about_us_window(Tk):
+class about_us_window(Toplevel):
     def __init__(self):
         super().__init__()
 
