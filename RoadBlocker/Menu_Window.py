@@ -5,6 +5,7 @@ import Help_Window
 from tkinter import Frame, Label, Button, Toplevel, LEFT, TOP, X
 import os
 import Setting_Window
+import start_window
 
 class Menu_window(Toplevel):
     def __init__(self):
@@ -65,7 +66,7 @@ class Menu_window(Toplevel):
 
 
         quit_btn = Button(self.toggle_menu, text='Quit', font=('Bold', 20), bg='#ffb515',fg='white',
-                        activebackground='#ffb515', activeforeground='white',)
+                        activebackground='#ffb515', activeforeground='white')
         quit_btn.place(x=20, y=260)
          
 
@@ -84,6 +85,4 @@ class Menu_window(Toplevel):
 
     def show_settings(self):
         Setting_Window.settings_window()
-         
-    
-    
+

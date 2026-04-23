@@ -26,7 +26,7 @@ class Master_window(Tk):
         
         #title,icon,size
         self.title("ROADBLOCKR")
-        self.iconbitmap("")
+        self.iconphoto("")
         self.geometry('800x650')
         
         self.main_frame = Frame(self)
@@ -46,7 +46,7 @@ class Master_window(Tk):
     def show_main_menu(self):
         Menu_Window.Menu_window()
         
-
+    
 
 
 
