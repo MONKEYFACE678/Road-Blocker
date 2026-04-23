@@ -2,6 +2,7 @@ import LocationGetter
 import TrafficGetter
 from tkinter import Frame, Label, Button,StringVar,Entry, Toplevel, RIDGE, PhotoImage
 import os
+from PIL import Image, ImageTk
 
 class traffic_data_window(Toplevel):
     
@@ -26,11 +27,23 @@ class traffic_data_window(Toplevel):
             tg.save_pbf_as_json()
             tg.save_weighted_graph_from_file_to_file()
             
-            img_path = os.path.join(self.data_folder, "map_img.png")
+            map_img_path = os.path.join(self.data_folder, "map_img.png")
+            traffic_img_path = os.path.join(self.data_folder, "traffic_img.png")
+            
+            map_img = Image.open(map_img_path).convert("RGBA")
+            traffic_img = Image.open(traffic_img_path).convert("RGBA")
+            
+            map_img = map_img.resize((500,500))
 
-            self.satelite_img = PhotoImage(file=img_path)
+            traffic_img = traffic_img.resize(map_img.size)
+
+            traffic_img.putalpha(128)  # 128 = 50% transparency
+
+            combined = Image.alpha_composite(map_img, traffic_img)
+
+            self.satelite_img = ImageTk.PhotoImage(combined)
+
             self.satelite_img_lbl.config(image=self.satelite_img)
-
             self.satelite_img_lbl.image = self.satelite_img # type: ignore
             
             data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
