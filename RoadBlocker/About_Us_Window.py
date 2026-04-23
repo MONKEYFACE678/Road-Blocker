@@ -1,8 +1,8 @@
 from tkinter import Label, Toplevel
 
 class about_us_window(Toplevel):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, master):
+        super().__init__(master)
 
         self.geometry("1500x500")
 

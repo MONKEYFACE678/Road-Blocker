@@ -32,7 +32,9 @@ class Master_window(Tk):
         self.main_frame = Frame(self)
         #setup for start button, image background, and fonts...
         self.img = PhotoImage(file=os.path.join(self.resources,"start_window.png")).subsample(3)
-        self.bg_img = Label(self, image = self.img)
+        self.bg_img = Label(self)
+        self.bg_img.image = self.img # type: ignore
+        self.bg_img.configure(image = self.bg_img.image) # type: ignore
         self.bg_img.pack(fill="both", expand=True)
 
         self.title_img = PhotoImage(file = os.path.join(self.resources,"title","title_rb.png")).subsample(2)
@@ -44,15 +46,4 @@ class Master_window(Tk):
         self.start_button.place(x=330, y=539)
         
     def show_main_menu(self):
-        Menu_Window.Menu_window()
-        
-    
-
-
-
-
-
-        
-
-
- 
+        Menu_Window.Menu_window(self)

@@ -6,8 +6,8 @@ from PIL import Image, ImageTk
 
 class traffic_data_window(Toplevel):
     
-    def __init__(self):
-        super().__init__()
+    def __init__(self, master):
+        super().__init__(master)
         
         def update_data():
             api_key = "zTfX7b0hg5V9N5Jzi0bngmq1lFL7vmms"
