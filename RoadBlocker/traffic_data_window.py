@@ -1,6 +1,6 @@
 import LocationGetter
 import TrafficGetter
-from tkinter import Frame, Label, Button,StringVar,Entry, Toplevel, RIDGE, PhotoImage
+from tkinter import Frame, Label, Button,StringVar,Entry, Toplevel, RIDGE, PhotoImage, END
 import os
 from PIL import Image, ImageTk
 
@@ -48,6 +48,9 @@ class traffic_data_window(Toplevel):
             
             data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
     
+        def clear_entry(event, entry):
+            entry.delete(0, END)
+    
         lg = LocationGetter.LocationGetter()
         tg = TrafficGetter.TrafficGetter()
         dirname = os.path.dirname(__file__)
@@ -81,6 +84,8 @@ class traffic_data_window(Toplevel):
         e1 = Entry(self)
         e1.insert(0,"Enter Location Here...")
         e1.place(x=0,y=50)
+        
+        e1.bind("<Button-1>", lambda event: clear_entry(event, e1))
             
         use_entered_loc_button = Button(self, text="Submit address", command=lambda:lg.get_location_coordinates_from_address(e1.get()))
         use_entered_loc_button.place(x=0,y=75)
