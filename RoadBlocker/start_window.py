@@ -31,7 +31,7 @@ class Master_window(Tk):
        
         ico = Image.open('RoadBlocker\\resources\\Icon.png')
         photo = ImageTk.PhotoImage(ico)
-        self.wm_iconphoto(False, photo)
+        self.wm_iconphoto(True, photo)
         self.geometry('800x650')
         
         self.main_frame = Frame(self)
