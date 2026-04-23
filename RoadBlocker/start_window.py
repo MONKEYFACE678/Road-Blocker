@@ -26,7 +26,7 @@ class Master_window(Tk):
         
         #title,icon,size
         self.title("ROADBLOCKR")
-        self.iconphoto("")
+        
         self.geometry('800x650')
         
         self.main_frame = Frame(self)
