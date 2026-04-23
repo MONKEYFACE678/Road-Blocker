@@ -14,6 +14,8 @@ instructions, about us, quit
 import os as os
 import Menu_Window
 from tkinter import Frame, PhotoImage, Label, Button, Tk
+import PIL
+from PIL import Image, ImageTk
 
 class Master_window(Tk):
     
@@ -26,7 +28,10 @@ class Master_window(Tk):
         
         #title,icon,size
         self.title("ROADBLOCKR")
-        self.iconbitmap("")
+       
+        ico = Image.open('RoadBlocker\\resources\\Icon.png')
+        photo = ImageTk.PhotoImage(ico)
+        self.wm_iconphoto(False, photo)
         self.geometry('800x650')
         
         self.main_frame = Frame(self)
