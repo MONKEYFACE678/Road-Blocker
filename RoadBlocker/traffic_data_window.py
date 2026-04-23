@@ -1,7 +1,8 @@
 import LocationGetter
 import TrafficGetter
-from tkinter import Frame, Label, Button,StringVar,Entry, Toplevel, RIDGE, PhotoImage
+from tkinter import Frame, Label, Button,StringVar,Entry, Toplevel, RIDGE, PhotoImage, END
 import os
+from PIL import Image, ImageTk
 
 class traffic_data_window(Toplevel):
     
@@ -26,14 +27,29 @@ class traffic_data_window(Toplevel):
             tg.save_pbf_as_json()
             tg.save_weighted_graph_from_file_to_file()
             
-            img_path = os.path.join(self.data_folder, "map_img.png")
+            map_img_path = os.path.join(self.data_folder, "map_img.png")
+            traffic_img_path = os.path.join(self.data_folder, "traffic_img.png")
+            
+            map_img = Image.open(map_img_path).convert("RGBA")
+            traffic_img = Image.open(traffic_img_path).convert("RGBA")
+            
+            map_img = map_img.resize((500,500))
 
-            self.satelite_img = PhotoImage(file=img_path)
+            traffic_img = traffic_img.resize(map_img.size)
+
+            traffic_img.putalpha(128)  # 128 = 50% transparency
+
+            combined = Image.alpha_composite(map_img, traffic_img)
+
+            self.satelite_img = ImageTk.PhotoImage(combined)
+
             self.satelite_img_lbl.config(image=self.satelite_img)
-
             self.satelite_img_lbl.image = self.satelite_img # type: ignore
             
             data_string.set(f"Current speed in selected area is {current_speed} mph, which is {free_flow_speed - current_speed} mph less than the free flow speed of {free_flow_speed} mph")
+    
+        def clear_entry(event, entry):
+            entry.delete(0, END)
     
         lg = LocationGetter.LocationGetter()
         tg = TrafficGetter.TrafficGetter()
@@ -68,6 +84,8 @@ class traffic_data_window(Toplevel):
         e1 = Entry(self)
         e1.insert(0,"Enter Location Here...")
         e1.place(x=0,y=50)
+        
+        e1.bind("<Button-1>", lambda event: clear_entry(event, e1))
             
         use_entered_loc_button = Button(self, text="Submit address", command=lambda:lg.get_location_coordinates_from_address(e1.get()))
         use_entered_loc_button.place(x=0,y=75)
