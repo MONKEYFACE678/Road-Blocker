@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import Toplevel, Button
 import customtkinter as ct
 
 class settings_window(Toplevel):

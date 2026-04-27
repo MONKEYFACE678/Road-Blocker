@@ -3,7 +3,7 @@ import os as os
 from About_Us_Window import about_us_window
 from Help_Window import help_window
 from Setting_Window import settings_window
-from Traffic_data_window import traffic_data_window
+from Traffic_Data_Window import traffic_data_window
 from tkinter import Frame, Label, Button, Toplevel, LEFT, TOP, X
 import os
 

@@ -2,7 +2,6 @@ import LocationGetter
 import TrafficGetter
 from tkinter import Frame, Label, Button,StringVar,Entry, Toplevel, RIDGE, PhotoImage, END
 import os
-from tkinter import *
 from PIL import Image, ImageTk
 
 class traffic_data_window(Toplevel):

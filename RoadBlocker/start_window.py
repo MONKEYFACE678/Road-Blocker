@@ -12,17 +12,11 @@ instructions, about us, quit
 5.
 '''
 import os as os
-from tkinter import *
 from tkinter import Frame, PhotoImage, Label, Button, Tk
 
 from PIL import Image, ImageTk
-from About_Us_Window import about_us_window
-from Help_Window import help_window
 
 from Menu_Window import Menu_window
-from Setting_Window import settings_window
-
-from Traffic_data_window import traffic_data_window
 
 
 class Master_window(Tk):
@@ -37,7 +31,7 @@ class Master_window(Tk):
         #title,icon,size
         self.title("ROADBLOCKR")
        
-        ico = Image.open('RoadBlocker\\resources\\Icon.png')
+        ico = Image.open(os.path.join(self.resources,'Icon.png'))
         photo = ImageTk.PhotoImage(ico)
         self.wm_iconphoto(True, photo)
         self.geometry('800x650')
