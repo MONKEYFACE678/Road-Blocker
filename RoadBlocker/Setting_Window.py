@@ -4,6 +4,7 @@ import customtkinter as ct
 class settings_window(Toplevel):
     def __init__(self, master):
         super().__init__(master)
+        self.master = master
         self.geometry("700x500")
         
         self.toggle_btn = Button(self, text="Light", width=12, relief="raised")

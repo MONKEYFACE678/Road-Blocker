@@ -14,8 +14,16 @@ instructions, about us, quit
 import os as os
 import Menu_Window
 from tkinter import Frame, PhotoImage, Label, Button, Tk
-import PIL
+
 from PIL import Image, ImageTk
+from About_Us_Window import about_us_window
+from Help_Window import help_window
+
+from Menu_Window import Menu_window
+from Setting_Window import settings_window
+
+from traffic_data_window import traffic_data_window
+
 
 class Master_window(Tk):
     
@@ -33,6 +41,7 @@ class Master_window(Tk):
         photo = ImageTk.PhotoImage(ico)
         self.wm_iconphoto(True, photo)
         self.geometry('800x650')
+        
         
         self.main_frame = Frame(self)
         #setup for start button, image background, and fonts...

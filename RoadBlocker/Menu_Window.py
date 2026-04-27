@@ -10,6 +10,7 @@ class Menu_window(Toplevel):
     def __init__(self, master):
         #send super() to Tk 
         super().__init__(master)
+        self.master = master
         #title,icon,size 
         self.geometry("300x500")
         

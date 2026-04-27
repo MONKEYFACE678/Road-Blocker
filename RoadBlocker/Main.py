@@ -1,5 +1,6 @@
 
 import start_window
+start_window.Master_window
 
 if __name__ == "__main__":
 
