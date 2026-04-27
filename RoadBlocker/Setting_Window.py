@@ -6,6 +6,7 @@ class settings_window(Toplevel):
         super().__init__(master)
         self.master = master
         self.geometry("700x500")
+        self.config()
         
         self.toggle_btn = Button(self, text="Light", width=12, relief="raised")
         self.toggle_btn.pack(pady=5)  

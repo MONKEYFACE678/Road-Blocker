@@ -1,10 +1,11 @@
 import os as os
-import traffic_data_window
-import About_Us_Window
-import Help_Window
+
+from About_Us_Window import about_us_window
+from Help_Window import help_window
+from Setting_Window import settings_window
+from Traffic_data_window import traffic_data_window
 from tkinter import Frame, Label, Button, Toplevel, LEFT, TOP, X
 import os
-import Setting_Window
 
 class Menu_window(Toplevel):
     def __init__(self, master):
@@ -13,6 +14,7 @@ class Menu_window(Toplevel):
         self.master = master
         #title,icon,size 
         self.geometry("300x500")
+        self.config()
         
         self.head_frame = Frame(self, bg="#ffb515",
                     highlightbackground='white', highlightthickness=1)
@@ -46,7 +48,7 @@ class Menu_window(Toplevel):
         
         location_search_buttton = Button(self.toggle_menu, text='Search',
                             font=('Bold', 20), bg='#ffb515', fg='white',
-                            activebackground='#ffb515', activeforeground='white', command=lambda:traffic_data_window.traffic_data_window(self))
+                            activebackground='#ffb515', activeforeground='white', command=lambda:traffic_data_window(self))
         location_search_buttton.place(x=20, y=20)
         
         setttings_btn = Button(self.toggle_menu, text='Settings',
@@ -78,11 +80,13 @@ class Menu_window(Toplevel):
         self.toggle_button.config(command=collapse_toggle_menu)
 
     def show_about(self):
-        About_Us_Window.about_us_window(self)
+        about_us_window(self)
 
     def show_help(self):
-        Help_Window.help_window(self)
+        help_window(self)
 
     def show_settings(self):
-        Setting_Window.settings_window(self)
+        settings_window(self)
+
+   
 

@@ -12,7 +12,7 @@ instructions, about us, quit
 5.
 '''
 import os as os
-import Menu_Window
+from tkinter import *
 from tkinter import Frame, PhotoImage, Label, Button, Tk
 
 from PIL import Image, ImageTk
@@ -22,7 +22,7 @@ from Help_Window import help_window
 from Menu_Window import Menu_window
 from Setting_Window import settings_window
 
-from traffic_data_window import traffic_data_window
+from Traffic_data_window import traffic_data_window
 
 
 class Master_window(Tk):
@@ -41,6 +41,7 @@ class Master_window(Tk):
         photo = ImageTk.PhotoImage(ico)
         self.wm_iconphoto(True, photo)
         self.geometry('800x650')
+        self.config()
         
         
         self.main_frame = Frame(self)
@@ -60,8 +61,8 @@ class Master_window(Tk):
         self.start_button.place(x=330, y=539)
         
     def show_main_menu(self):
-        Menu_Window.Menu_window(self)
-        Menu_Window.Menu_window()
+        Menu_window(self)
+      
         
     def destroy_window(self):
         self.destroy()
