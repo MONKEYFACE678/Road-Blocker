@@ -18,7 +18,6 @@ from PIL import Image, ImageTk
 
 from Menu_Window import Menu_window
 
-
 class Master_window(Tk):
     
     def __init__(self):
@@ -36,7 +35,6 @@ class Master_window(Tk):
         self.wm_iconphoto(True, photo)
         self.geometry('800x650')
         self.config()
-        
         
         self.main_frame = Frame(self)
         #setup for start button, image background, and fonts...
@@ -57,15 +55,5 @@ class Master_window(Tk):
     def show_main_menu(self):
         Menu_window(self)
       
-        
     def destroy_window(self):
         self.destroy()
-
-
-
-
-
-        
-
-
- 

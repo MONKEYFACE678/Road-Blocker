@@ -17,13 +17,9 @@ class settings_window(Toplevel):
         else:
             self.toggle_btn.config(relief="sunken")
 
-
-
-
     def get_dark_mode(self):
         ct.set_appearance_mode("dark")
         pass
     def get_light_mode(self):
         ct.set_appearance_mode("light")
         pass
-         

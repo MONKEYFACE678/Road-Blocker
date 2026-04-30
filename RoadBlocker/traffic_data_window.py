@@ -11,8 +11,6 @@ class traffic_data_window(Toplevel):
         self.master = master
         self.configure(bg="#1D86CC")
 
-       
-
         def update_data():
             api_key = "zTfX7b0hg5V9N5Jzi0bngmq1lFL7vmms"
             
@@ -103,6 +101,3 @@ class traffic_data_window(Toplevel):
             
         use_entered_loc_button = Button(self, relief="raised",text="Submit address",bg="#EAE0C3", font=('Arial',12 ),command= get_data_from_search)
         use_entered_loc_button.place(x=30,y=170)
-            
-        
-       

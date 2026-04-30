@@ -44,8 +44,6 @@ class Menu_window(Toplevel):
 
         self.toggle_menu = Frame(self, bg='#ffb515')
         
-    
-        
         location_search_buttton = Button(self.toggle_menu, text='Search',
                             font=('Bold', 20), bg='#ffb515', fg='white',
                             activebackground='#ffb515', activeforeground='white', command=lambda:traffic_data_window(self))
@@ -68,9 +66,8 @@ class Menu_window(Toplevel):
 
 
         quit_btn = Button(self.toggle_menu, text='Quit', font=('Bold', 20), bg='#ffb515',fg='white',
-                        activebackground='#ffb515', activeforeground='white')
+                        activebackground='#ffb515', activeforeground='white', command=self.exit)
         quit_btn.place(x=20, y=260)
-         
 
         window_height = self.winfo_height()
 
@@ -87,6 +84,6 @@ class Menu_window(Toplevel):
 
     def show_settings(self):
         settings_window(self)
-
-   
-
+        
+    def exit(self):
+        self.master.destroy()

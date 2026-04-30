@@ -1,6 +1,5 @@
 from tkinter import Label, Toplevel
 
-
 class about_us_window(Toplevel):
     def __init__(self, master):
         super().__init__(master)
